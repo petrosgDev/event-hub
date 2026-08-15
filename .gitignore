@@ -12,3 +12,4 @@ coverage/
 prisma/*.db
 uploads/
 firebase-service-account.json
+render.env
