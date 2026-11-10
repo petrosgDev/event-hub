@@ -1,26 +1,23 @@
 services:
   - type: web
-    name: eventhub-backend
+    name: eventhub-dbu
     env: node
-    rootDir: backend
     buildCommand: npm install && npm run build
     startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: 5000
-      - key: CORS_ORIGIN
-        value: https://event-hub-dbu.vercel.app # Replace with your actual frontend Vercel URL
-      - key: FRONTEND_URL
-        value: https://event-hub-dbu.vercel.app # Replace with your actual frontend Vercel URL
+        value: 3000
       - key: JWT_SECRET
         generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
       - key: JWT_EXPIRES_IN
+        value: 15m
+      - key: JWT_REFRESH_EXPIRES_IN
         value: 7d
       - key: DATABASE_URL
-        sync: false # Provide this manually in Render dashboard
+        sync: false # Provide PostgreSQL connection string in Render dashboard
       - key: CHAPA_SECRET_KEY
-        sync: false # Provide this manually in Render dashboard
-      - key: FIREBASE_SERVICE_ACCOUNT
-        sync: false # Paste your firebase-service-account.json content here in Render dashboard
+        sync: false # Provide Chapa secret key in Render dashboard
