@@ -27,7 +27,7 @@ export function Navbar() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 w-full border-b border-white/20 dark:border-white/10 bg-background/75 dark:bg-background/50 backdrop-blur-2xl shadow-[0_4px_24px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
         
         {/* Left Side: Logo & Search Bar */}
@@ -79,7 +79,7 @@ export function Navbar() {
                 router.push('/events/discover');
               }
             }}
-            className="hidden md:flex items-center bg-secondary/50 border border-border rounded-full px-3.5 py-1.5 max-w-sm flex-1 transition-colors focus-within:border-primary/50 focus-within:bg-secondary/80"
+            className="hidden md:flex items-center bg-white/50 dark:bg-white/[0.06] border border-white/30 dark:border-white/10 backdrop-blur-md rounded-full px-4 py-1.5 max-w-sm flex-1 transition-all focus-within:border-primary/60 focus-within:ring-2 focus-within:ring-primary/20 shadow-sm"
           >
             <Search className="w-4 h-4 mr-2.5 text-muted-foreground shrink-0" />
             <input 

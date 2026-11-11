@@ -182,61 +182,76 @@ export default function OrganizerDashboard() {
             </CardContent>
           </Card>
 
-          {/* Event Management Table */}
-          <Card className="bg-white/5 border-white/10 overflow-hidden">
-            <div className="p-6 border-b border-white/10 flex items-center justify-between">
-              <CardTitle>Recent Events</CardTitle>
-              <Button variant="ghost" size="sm" className="text-primary hover:bg-primary/10">
-                View All <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
+          {/* Event Management Cards (Rounded Edge Rectangles) */}
+          <Card className="overflow-hidden rounded-3xl">
+            <div className="p-6 border-b border-white/10 dark:border-white/5 flex items-center justify-between">
+              <div>
+                <CardTitle className="text-xl">Recent Events</CardTitle>
+                <CardDescription>Your hosted and upcoming university experiences</CardDescription>
+              </div>
+              <Link href="/dashboard/organizer/events">
+                <Button variant="ghost" size="sm" className="rounded-xl text-primary hover:bg-primary/10">
+                  View All <ArrowRight className="w-4 h-4 ml-1.5" />
+                </Button>
+              </Link>
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm text-left">
-                <thead className="text-xs uppercase bg-white/5 text-muted-foreground">
-                  <tr>
-                    <th className="px-6 py-4 font-medium">Event Name</th>
-                    <th className="px-6 py-4 font-medium">Date</th>
-                    <th className="px-6 py-4 font-medium">Status</th>
-                    <th className="px-6 py-4 font-medium">Attendees</th>
-                    <th className="px-6 py-4 font-medium">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5">
-                  {eventsLoading ? (
-                    <tr><td colSpan={5} className="px-6 py-8 text-center text-muted-foreground">Loading events...</td></tr>
-                  ) : events.length === 0 ? (
-                    <tr><td colSpan={5} className="px-6 py-8 text-center text-muted-foreground">No events created yet.</td></tr>
-                  ) : (
-                    events.slice(0, 5).map((evt: any) => (
-                      <tr key={evt.id} className="hover:bg-white/5 transition-colors">
-                        <td className="px-6 py-4 font-medium text-foreground max-w-[200px] truncate">{evt.title}</td>
-                        <td className="px-6 py-4 text-muted-foreground">
-                          {evt.date ? format(new Date(evt.date), 'MMM d, yyyy') : '—'}
-                        </td>
-                        <td className="px-6 py-4">
+            
+            <div className="p-6">
+              {eventsLoading ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="h-32 rounded-2xl bg-white/5 border border-white/10 animate-pulse" />
+                  ))}
+                </div>
+              ) : events.length === 0 ? (
+                <div className="py-12 text-center text-muted-foreground">
+                  <CalendarDays className="w-10 h-10 mx-auto mb-2 text-muted-foreground/30" />
+                  <p>No events created yet.</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {events.slice(0, 4).map((evt: any) => (
+                    <div 
+                      key={evt.id} 
+                      className="group flex flex-col justify-between p-4 rounded-2xl bg-white/40 dark:bg-white/[0.04] border border-white/20 dark:border-white/10 hover:border-primary/40 transition-all duration-300 hover:-translate-y-1 backdrop-blur-md"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between gap-2 mb-2">
                           <Badge variant="outline" className={
-                            evt.status === 'PUBLISHED' ? 'border-primary text-primary' :
-                            evt.status === 'COMPLETED' ? 'border-green-500 text-green-500' :
-                            'border-muted-foreground text-muted-foreground'
+                            evt.status === 'PUBLISHED' ? 'border-primary/40 text-primary bg-primary/10' :
+                            evt.status === 'COMPLETED' ? 'border-emerald-500/40 text-emerald-400 bg-emerald-500/10' :
+                            'border-muted-foreground/40 text-muted-foreground'
                           }>
                             {evt.status}
                           </Badge>
-                        </td>
-                        <td className="px-6 py-4 text-muted-foreground">
-                          {evt.registeredCount ?? 0} / {evt.capacity}
-                        </td>
-                        <td className="px-6 py-4">
-                          <Link href={`/dashboard/organizer/events/${evt.id}`}>
-                            <Button variant="ghost" size="sm" className="h-8 hover:text-primary">
-                              Manage <ChevronRight className="w-4 h-4 ml-1" />
-                            </Button>
-                          </Link>
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
+                          <span className="text-xs text-muted-foreground">
+                            {evt.date ? format(new Date(evt.date), 'MMM d, yyyy') : '—'}
+                          </span>
+                        </div>
+
+                        <h4 className="font-bold text-base text-foreground line-clamp-1 group-hover:text-primary transition-colors">
+                          {evt.title}
+                        </h4>
+
+                        <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
+                          <span className="flex items-center gap-1.5">
+                            <Users className="w-3.5 h-3.5 text-primary" />
+                            <span>{evt.registeredCount ?? 0} / {evt.capacity} Attendees</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="mt-4 pt-3 border-t border-white/10 dark:border-white/5 flex justify-end">
+                        <Link href={`/dashboard/organizer/events/${evt.id}`}>
+                          <Button variant="ghost" size="sm" className="rounded-xl h-8 text-xs font-semibold hover:text-primary">
+                            Manage <ChevronRight className="w-3.5 h-3.5 ml-1" />
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </Card>
         </div>

@@ -109,35 +109,27 @@ function DiscoverEventsContent() {
 
         {/* Events Grid */}
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[1,2,3,4,5,6,7,8].map((i) => (
-              <Card key={i} className="bg-card border-border overflow-hidden">
-                <Skeleton className="h-44 w-full rounded-none" />
-                <CardContent className="p-5 space-y-3">
-                  <Skeleton className="h-4 w-20" />
-                  <Skeleton className="h-5 w-full" />
-                  <Skeleton className="h-4 w-full" />
-                  <div className="flex justify-between pt-3"><Skeleton className="h-8 w-20" /><Skeleton className="h-8 w-20" /></div>
-                </CardContent>
-              </Card>
+              <div key={i} className="h-80 w-full rounded-3xl bg-white/5 border border-white/10 animate-pulse" />
             ))}
           </div>
         ) : filteredEvents.length === 0 ? (
-          <div className="text-center py-20 bg-card border border-border rounded-2xl backdrop-blur-sm">
+          <div className="text-center py-20 bg-card/60 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-3xl shadow-sm">
             <Search className="w-12 h-12 text-muted-foreground/30 mx-auto mb-4" />
             <h3 className="text-xl font-semibold mb-2">No events found</h3>
             <p className="text-muted-foreground mb-4">Try adjusting your search or filters.</p>
-            <Button variant="link" onClick={() => { setSearchTerm(''); setActiveCategory(null); setPriceFilter('all'); }} className="text-primary">
+            <Button variant="link" onClick={() => { setSearchTerm(''); setActiveCategory(null); setPriceFilter('all'); }} className="text-primary font-bold">
               Clear all filters
             </Button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredEvents.map((event: any, i: number) => (
               <motion.div key={event.id} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25, delay: i * 0.04 }}>
                 <Link href={`/events/${event.id}`}>
-                  <Card className="h-full bg-card border-border hover:border-primary/50 transition-all duration-300 overflow-hidden group cursor-pointer flex flex-col hover:-translate-y-1 shadow-md">
-                    <div className="relative h-44 w-full bg-muted overflow-hidden">
+                  <Card className="h-full rounded-3xl p-0 overflow-hidden group cursor-pointer flex flex-col hover:-translate-y-2 hover:border-primary/50 transition-all duration-300">
+                    <div className="relative h-44 w-full bg-muted overflow-hidden rounded-t-3xl">
                       {(() => {
                         const fallbackImages: Record<string, string> = {
                           'workshop': 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&h=400&fit=crop',
@@ -157,28 +149,32 @@ function DiscoverEventsContent() {
                         );
                       })()}
                       <div className="absolute top-3 left-3">
-                        <Badge className="bg-background/80 backdrop-blur-md text-foreground border-border text-xs font-bold">{event.category?.name || 'Event'}</Badge>
+                        <Badge className="bg-black/60 backdrop-blur-md text-white border-white/20 text-xs font-bold">{event.category?.name || 'Event'}</Badge>
                       </div>
                       <div className="absolute top-3 right-3">
                         {!event.isFree && event.price > 0 ? (
                           <Badge className="bg-orange-500 text-white text-xs font-bold">{event.price} ETB</Badge>
                         ) : (
-                          <Badge className="bg-green-500 text-white text-xs font-bold">FREE</Badge>
+                          <Badge className="bg-emerald-500 text-white text-xs font-bold">FREE</Badge>
                         )}
                       </div>
                       <div className="absolute bottom-0 left-0 right-0 h-14 bg-gradient-to-t from-black/80 to-transparent" />
                       <div className="absolute bottom-3 left-3 right-3 flex justify-between items-end text-xs text-white">
-                        <span className="flex items-center gap-1 font-semibold"><Calendar className="w-3 h-3" /> {format(new Date(event.date), 'MMM d')}</span>
-                        <span className="flex items-center gap-1 font-semibold"><Users className="w-3 h-3" /> {event.registeredCount}/{event.capacity}</span>
+                        <span className="flex items-center gap-1 font-semibold"><Calendar className="w-3 h-3 text-primary" /> {format(new Date(event.date), 'MMM d')}</span>
+                        <span className="flex items-center gap-1 font-semibold"><Users className="w-3 h-3 text-primary" /> {event.registeredCount}/{event.capacity || '∞'}</span>
                       </div>
                     </div>
-                    <CardContent className="p-4 flex-grow flex flex-col">
-                      <h3 className="font-bold text-foreground mb-1.5 line-clamp-2 group-hover:text-primary transition-colors">{event.title}</h3>
-                      <p className="text-muted-foreground text-sm line-clamp-2 mb-3 flex-grow font-medium">{event.description}</p>
-                      <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                        <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {event.location || 'Online'}</span>
-                        <span>·</span>
-                        <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {event.startTime}</span>
+                    <CardContent className="p-5 flex-grow flex flex-col justify-between">
+                      <div>
+                        <h3 className="font-bold text-foreground mb-1.5 line-clamp-1 group-hover:text-primary transition-colors">{event.title}</h3>
+                        <p className="text-muted-foreground text-xs line-clamp-2 mb-3 leading-relaxed">{event.description}</p>
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-muted-foreground pt-3 border-t border-white/10 dark:border-white/5">
+                        <MapPin className="w-3.5 h-3.5 text-primary shrink-0" />
+                        <span className="truncate">{event.location || 'DBU Campus'}</span>
+                        <span className="mx-1">·</span>
+                        <Clock className="w-3.5 h-3.5 text-primary shrink-0" />
+                        <span>{event.startTime}</span>
                       </div>
                     </CardContent>
                   </Card>

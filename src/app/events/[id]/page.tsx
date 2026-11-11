@@ -366,7 +366,7 @@ export default function EventDetailPage() {
 
             <section>
               <h2 className="text-2xl font-bold mb-6">Location Map</h2>
-              <div className="rounded-xl overflow-hidden border border-white/10 bg-white/5 relative h-[300px]">
+              <div className="rounded-3xl overflow-hidden border border-white/20 dark:border-white/10 bg-white/5 relative h-[300px] shadow-sm">
                 {event.isOnline ? (
                   <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
                     <MapPin className="w-12 h-12 mb-2 opacity-50" />
@@ -391,17 +391,17 @@ export default function EventDetailPage() {
 
             <section>
               <h2 className="text-2xl font-bold mb-6">Organizer</h2>
-              <div className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
-                <Avatar className="h-16 w-16 border-2 border-primary/20">
+              <div className="flex items-center gap-4 p-5 rounded-3xl bg-white/40 dark:bg-white/[0.04] border border-white/20 dark:border-white/10 backdrop-blur-md">
+                <Avatar className="h-16 w-16 border-2 border-primary/30 rounded-2xl">
                   <AvatarImage src={event.organizer.avatar} />
-                  <AvatarFallback className="bg-primary/20 text-primary text-xl">
+                  <AvatarFallback className="bg-primary/20 text-primary text-xl font-bold rounded-2xl">
                     {event.organizer.firstName[0]}{event.organizer.lastName[0]}
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <h3 className="text-lg font-semibold">{event.organizer.firstName} {event.organizer.lastName}</h3>
-                  <p className="text-muted-foreground text-sm flex items-center gap-1.5 mt-1">
-                    <Building className="w-4 h-4" /> {event.club?.name || 'Independent Organizer'}
+                  <h3 className="text-lg font-bold">{event.organizer.firstName} {event.organizer.lastName}</h3>
+                  <p className="text-muted-foreground text-sm flex items-center gap-1.5 mt-1 font-medium">
+                    <Building className="w-4 h-4 text-primary" /> {event.club?.name || 'Independent Organizer'}
                   </p>
                 </div>
               </div>
@@ -412,12 +412,12 @@ export default function EventDetailPage() {
                 <h2 className="text-2xl font-bold mb-6">Schedule</h2>
                 <div className="space-y-4">
                   {event.schedules.map((schedule: any, i: number) => (
-                    <div key={i} className="flex gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
-                      <div className="text-primary font-mono font-medium shrink-0 pt-1">
+                    <div key={i} className="flex gap-4 p-5 rounded-2xl bg-white/40 dark:bg-white/[0.04] border border-white/20 dark:border-white/10 backdrop-blur-md hover:border-primary/40 transition-all">
+                      <div className="text-primary font-mono font-bold shrink-0 pt-0.5">
                         {schedule.startTime}
                       </div>
                       <div>
-                        <h4 className="font-semibold">{schedule.title}</h4>
+                        <h4 className="font-bold text-foreground">{schedule.title}</h4>
                         {schedule.description && <p className="text-sm text-muted-foreground mt-1">{schedule.description}</p>}
                       </div>
                     </div>
@@ -430,14 +430,14 @@ export default function EventDetailPage() {
           {/* Sidebar / Registration Card */}
           <div className="lg:col-span-1">
             <div className="sticky top-24">
-              <Card className="bg-card/50 backdrop-blur-xl border-white/10 shadow-2xl overflow-hidden">
-                <div className="h-1.5 w-full bg-gradient-to-r from-primary via-secondary to-accent" />
-                <CardContent className="p-6">
+              <Card className="rounded-3xl shadow-2xl overflow-hidden border border-white/20 dark:border-white/10">
+                <div className="h-2 w-full bg-gradient-to-r from-primary via-amber-400 to-orange-500" />
+                <CardContent className="p-7">
                   <div className="flex justify-between items-center mb-6">
                     <h3 className="text-xl font-bold">Registration</h3>
                     <div className="flex items-center gap-2">
-                      <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full hover:bg-white/10">
-                        <Share2 className="w-4 h-4" />
+                      <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full hover:bg-white/10">
+                        <Share2 className="w-4 h-4 text-primary" />
                       </Button>
                       <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full hover:bg-white/10">
                         <Bookmark className="w-4 h-4" />

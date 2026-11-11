@@ -52,7 +52,7 @@ export default function AdminSettingsPage() {
       </div>
 
       {/* Commission Settings */}
-      <Card className="bg-card border-border">
+      <Card className="rounded-3xl">
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
             <Percent className="w-5 h-5 text-primary" /> Commission Rate
@@ -72,7 +72,7 @@ export default function AdminSettingsPage() {
                   step="0.5"
                   value={commissionRate}
                   onChange={(e) => setCommissionRate(e.target.value)}
-                  className="bg-background border-border h-12 text-lg pr-10"
+                  className="h-12 text-lg pr-10 rounded-2xl"
                 />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-lg">%</span>
               </div>
@@ -81,7 +81,7 @@ export default function AdminSettingsPage() {
               <Button
                 onClick={() => updateRateMutation.mutate(Number(commissionRate))}
                 disabled={updateRateMutation.isPending || Number(commissionRate) === currentRate}
-                className="h-12 px-6"
+                className="h-12 px-6 rounded-xl"
               >
                 {updateRateMutation.isPending ? (
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -100,7 +100,7 @@ export default function AdminSettingsPage() {
       </Card>
 
       {/* Platform Info */}
-      <Card className="bg-card border-border">
+      <Card className="rounded-3xl">
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
             <Globe className="w-5 h-5 text-blue-400" /> Platform Information
@@ -130,24 +130,24 @@ export default function AdminSettingsPage() {
       </Card>
 
       {/* Notification Settings */}
-      <Card className="bg-card border-border">
+      <Card className="rounded-3xl">
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
-            <Bell className="w-5 h-5 text-yellow-400" /> Notifications
+            <Bell className="w-5 h-5 text-amber-400" /> Notifications
           </CardTitle>
           <CardDescription>Configure notification preferences</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[
               { label: 'Email new event notifications to admin', enabled: true },
               { label: 'Alert on high-capacity events (>80% full)', enabled: true },
               { label: 'Weekly platform report digest', enabled: false },
               { label: 'Organizer payout request alerts', enabled: true },
             ].map((pref, i) => (
-              <div key={i} className="flex items-center justify-between py-2 border-b border-border/50 last:border-0">
-                <span className="text-sm text-foreground">{pref.label}</span>
-                <Badge variant={pref.enabled ? 'default' : 'secondary'} className={`text-xs ${pref.enabled ? 'bg-green-500/20 text-green-400' : 'bg-muted text-muted-foreground'}`}>
+              <div key={i} className="flex items-center justify-between p-4 rounded-2xl bg-white/40 dark:bg-white/[0.04] border border-white/20 dark:border-white/10 backdrop-blur-md">
+                <span className="text-sm font-medium text-foreground pr-2">{pref.label}</span>
+                <Badge variant={pref.enabled ? 'default' : 'secondary'} className={`text-xs shrink-0 ${pref.enabled ? 'bg-emerald-500/20 text-emerald-400 border-none' : 'bg-muted text-muted-foreground'}`}>
                   {pref.enabled ? <><Check className="w-3 h-3 mr-1" /> On</> : 'Off'}
                 </Badge>
               </div>
@@ -157,7 +157,7 @@ export default function AdminSettingsPage() {
       </Card>
 
       {/* Security */}
-      <Card className="bg-card border-border">
+      <Card className="rounded-3xl">
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
             <Shield className="w-5 h-5 text-red-400" /> Security
@@ -165,16 +165,16 @@ export default function AdminSettingsPage() {
           <CardDescription>Security and access control settings</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[
               { label: 'Require email verification for new accounts', enabled: true },
               { label: 'Two-factor authentication for admin access', enabled: false },
               { label: 'Auto-suspend accounts after 5 failed login attempts', enabled: true },
               { label: 'Require university email domain (@dbu.edu.et)', enabled: true },
             ].map((pref, i) => (
-              <div key={i} className="flex items-center justify-between py-2 border-b border-border/50 last:border-0">
-                <span className="text-sm text-foreground">{pref.label}</span>
-                <Badge variant={pref.enabled ? 'default' : 'secondary'} className={`text-xs ${pref.enabled ? 'bg-green-500/20 text-green-400' : 'bg-muted text-muted-foreground'}`}>
+              <div key={i} className="flex items-center justify-between p-4 rounded-2xl bg-white/40 dark:bg-white/[0.04] border border-white/20 dark:border-white/10 backdrop-blur-md">
+                <span className="text-sm font-medium text-foreground pr-2">{pref.label}</span>
+                <Badge variant={pref.enabled ? 'default' : 'secondary'} className={`text-xs shrink-0 ${pref.enabled ? 'bg-emerald-500/20 text-emerald-400 border-none' : 'bg-muted text-muted-foreground'}`}>
                   {pref.enabled ? <><Check className="w-3 h-3 mr-1" /> On</> : 'Off'}
                 </Badge>
               </div>

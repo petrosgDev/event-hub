@@ -142,18 +142,19 @@ export default function LandingPage() {
         </section>
 
         {/* ═══════════════ BROWSE BY CATEGORY ═══════════════ */}
-        <section className="py-16 bg-secondary/30 border-y border-border">
+        <section className="py-20 relative">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-10">
-              <h2 className="text-2xl md:text-4xl font-bold mb-3">{t('browseByCategory')}</h2>
-              <p className="text-muted-foreground">{t('browseByCategoryDesc')}</p>
+            <div className="text-center mb-12">
+              <Badge className="mb-3 px-3 py-1 bg-primary/10 border-primary/30 text-primary">Explore Categories</Badge>
+              <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-3">{t('browseByCategory')}</h2>
+              <p className="text-muted-foreground max-w-lg mx-auto">{t('browseByCategoryDesc')}</p>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
               {(categories || []).slice(0, 10).map((cat: any) => (
                 <Link key={cat.id} href={`/events/discover?category=${cat.slug}`}>
-                  <div className="group flex flex-col items-center gap-3 p-5 rounded-2xl bg-card border border-border hover:border-primary/50 hover:bg-secondary transition-all hover:-translate-y-1 cursor-pointer shadow-sm">
-                    <span className="text-3xl group-hover:scale-110 transition-transform">{cat.icon}</span>
-                    <span className="text-sm font-bold text-center text-foreground">{cat.name}</span>
+                  <div className="group flex flex-col items-center gap-3 p-6 rounded-3xl bg-card/60 dark:bg-card/40 backdrop-blur-xl border border-white/20 dark:border-white/10 hover:border-primary/50 transition-all duration-300 hover:-translate-y-1.5 cursor-pointer shadow-sm hover:shadow-[0_12px_30px_rgba(249,115,22,0.12)]">
+                    <span className="text-4xl group-hover:scale-110 transition-transform duration-300">{cat.icon}</span>
+                    <span className="text-sm font-bold text-center text-foreground group-hover:text-primary transition-colors">{cat.name}</span>
                   </div>
                 </Link>
               ))}
@@ -186,8 +187,8 @@ export default function LandingPage() {
                 {allEvents.slice(0, 6).map((event: any, i: number) => (
                   <motion.div key={event.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
                     <Link href={`/events/${event.id}`}>
-                      <Card className="h-full bg-card border-border hover:border-primary/50 transition-all duration-300 overflow-hidden group cursor-pointer flex flex-col hover:-translate-y-1 shadow-md">
-                        <div className="relative h-44 w-full bg-muted overflow-hidden">
+                      <Card className="h-full rounded-3xl p-0 overflow-hidden group cursor-pointer flex flex-col hover:-translate-y-2 hover:border-primary/50 transition-all duration-300">
+                        <div className="relative h-48 w-full bg-muted overflow-hidden rounded-t-3xl">
                           {(() => {
                             const fallbackImages: Record<string, string> = {
                               'workshop': 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800&h=400&fit=crop',
@@ -206,8 +207,9 @@ export default function LandingPage() {
                               <img src={imgSrc} alt={event.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                             );
                           })()}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                           <div className="absolute top-3 left-3 flex gap-2">
-                            <Badge className="bg-background/80 backdrop-blur-md text-foreground border-border text-xs font-bold">
+                            <Badge className="bg-black/60 backdrop-blur-md text-white border-white/20 text-xs font-bold">
                               {event.category?.name || 'Event'}
                             </Badge>
                           </div>
@@ -215,29 +217,30 @@ export default function LandingPage() {
                             {!event.isFree && event.price > 0 ? (
                               <Badge className="bg-orange-500/90 text-white text-xs font-bold">{event.price} ETB</Badge>
                             ) : (
-                              <Badge className="bg-green-500/90 text-white text-xs font-bold">FREE</Badge>
+                              <Badge className="bg-emerald-500/90 text-white text-xs font-bold">FREE</Badge>
                             )}
                           </div>
-                          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/80 to-transparent" />
-                          <div className="absolute bottom-3 left-3 right-3 flex justify-between items-end">
-                            <span className="text-white text-xs font-medium flex items-center gap-1">
-                              <CalendarDays className="w-3 h-3" />
-                              {format(new Date(event.date), 'MMM d, yyyy')}
+                          <div className="absolute bottom-3 left-3 right-3 flex justify-between items-end text-xs text-white/90">
+                            <span className="flex items-center gap-1 font-medium">
+                              <CalendarDays className="w-3.5 h-3.5 text-primary" />
+                              {event.date ? format(new Date(event.date), 'MMM d, yyyy') : 'TBA'}
                             </span>
-                            <span className="text-white/80 text-xs flex items-center gap-1">
-                              <Users className="w-3 h-3" />
-                              {event.registeredCount}/{event.capacity}
+                            <span className="flex items-center gap-1 font-medium">
+                              <Users className="w-3.5 h-3.5 text-primary" />
+                              {event.registeredCount || 0} attending
                             </span>
                           </div>
                         </div>
-                        <CardContent className="p-5 flex-grow flex flex-col">
-                          <h3 className="text-lg font-bold mb-2 line-clamp-2 group-hover:text-primary transition-colors">{event.title}</h3>
-                          <p className="text-muted-foreground text-sm line-clamp-2 mb-3 flex-grow">{event.description}</p>
-                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <MapPin className="w-3.5 h-3.5 shrink-0" />
-                            <span className="truncate">{event.location || 'Online'}</span>
+                        <CardContent className="p-5 flex-grow flex flex-col justify-between">
+                          <div>
+                            <h3 className="text-lg font-bold mb-2 line-clamp-1 group-hover:text-primary transition-colors">{event.title}</h3>
+                            <p className="text-muted-foreground text-xs line-clamp-2 mb-4 leading-relaxed">{event.description}</p>
+                          </div>
+                          <div className="flex items-center gap-2 text-xs text-muted-foreground pt-3 border-t border-white/10 dark:border-white/5">
+                            <MapPin className="w-3.5 h-3.5 text-primary shrink-0" />
+                            <span className="truncate">{event.location || 'DBU Campus'}</span>
                             <span className="mx-1">·</span>
-                            <Clock className="w-3.5 h-3.5 shrink-0" />
+                            <Clock className="w-3.5 h-3.5 text-primary shrink-0" />
                             <span>{event.startTime}</span>
                           </div>
                         </CardContent>
@@ -298,7 +301,7 @@ export default function LandingPage() {
               <p className="text-muted-foreground text-lg">{t('featuresSubtitle')}</p>
             </div>
 
-            <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
                 { icon: Ticket, title: t('feature1Title'), description: t('feature1Desc') },
                 { icon: QrCode, title: t('feature2Title'), description: t('feature2Desc') },
@@ -307,11 +310,11 @@ export default function LandingPage() {
                 { icon: Award, title: t('feature5Title'), description: t('feature5Desc') },
                 { icon: ShieldCheck, title: t('feature6Title'), description: t('feature6Desc') },
               ].map((feature, i) => (
-                <motion.div key={i} variants={fadeIn} className="group p-7 rounded-2xl bg-card border border-border hover:border-primary/40 transition-all hover:-translate-y-1 shadow-sm">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
-                    <feature.icon className="w-6 h-6 text-primary" />
+                <motion.div key={i} variants={fadeIn} className="group p-8 rounded-3xl bg-card/65 dark:bg-card/40 backdrop-blur-xl border border-white/20 dark:border-white/10 hover:border-primary/50 transition-all duration-300 hover:-translate-y-1.5 shadow-sm hover:shadow-[0_12px_30px_rgba(249,115,22,0.1)]">
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-6 group-hover:bg-primary/20 group-hover:scale-105 transition-all">
+                    <feature.icon className="w-7 h-7 text-primary" />
                   </div>
-                  <h3 className="text-lg font-bold mb-2">{feature.title}</h3>
+                  <h3 className="text-xl font-bold mb-2 text-foreground group-hover:text-primary transition-colors">{feature.title}</h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">{feature.description}</p>
                 </motion.div>
               ))}

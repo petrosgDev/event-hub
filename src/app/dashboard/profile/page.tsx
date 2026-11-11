@@ -130,38 +130,38 @@ export default function ProfilePage() {
       </div>
 
       {/* Avatar Section */}
-      <Card className="bg-white/5 border-white/10 overflow-hidden">
-        <div className="h-32 bg-gradient-to-r from-primary/20 to-secondary/20 relative" />
+      <Card className="rounded-3xl overflow-hidden">
+        <div className="h-32 bg-gradient-to-r from-primary/30 via-amber-500/15 to-transparent relative" />
         <CardContent className="px-6 pb-6 pt-0 relative flex flex-col sm:flex-row items-center sm:items-end gap-6 sm:-mt-12">
           <div className="relative group">
-            <Avatar className="w-24 h-24 border-4 border-background bg-muted">
+            <Avatar className="w-24 h-24 border-4 border-background bg-muted rounded-3xl">
               <AvatarImage src={profile?.avatar} />
-              <AvatarFallback className="text-2xl font-bold bg-primary/20 text-primary">
+              <AvatarFallback className="text-2xl font-bold bg-primary/20 text-primary rounded-3xl">
                 {profile?.firstName?.[0]}{profile?.lastName?.[0]}
               </AvatarFallback>
             </Avatar>
-            <label className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity">
+            <label className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-3xl opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity">
               {isUploading ? <Loader2 className="w-6 h-6 animate-spin text-white" /> : <Camera className="w-6 h-6 text-white" />}
               <input type="file" className="hidden" accept="image/*" onChange={handleAvatarUpload} disabled={isUploading} />
             </label>
           </div>
           
           <div className="text-center sm:text-left flex-1 mb-2">
-            <h2 className="text-2xl font-bold">{profile?.firstName} {profile?.lastName}</h2>
-            <p className="text-muted-foreground">{profile?.email}</p>
+            <h2 className="text-2xl font-bold text-foreground">{profile?.firstName} {profile?.lastName}</h2>
+            <p className="text-muted-foreground text-sm">{profile?.email}</p>
           </div>
           
           <div className="mb-2">
-            <div className="px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-center">
-              <p className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Role</p>
-              <p className="font-bold text-primary">{profile?.role}</p>
+            <div className="px-5 py-2.5 bg-white/40 dark:bg-white/[0.06] backdrop-blur-md border border-white/20 dark:border-white/10 rounded-2xl text-center shadow-sm">
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">Role</p>
+              <p className="font-bold text-primary text-sm mt-0.5">{profile?.role}</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Form Section */}
-      <Card className="bg-white/5 border-white/10">
+      <Card className="rounded-3xl">
         <CardHeader>
           <CardTitle>Personal Information</CardTitle>
           <CardDescription>Update your personal details here.</CardDescription>
@@ -174,7 +174,7 @@ export default function ProfilePage() {
                 <Input
                   id="firstName"
                   {...register('firstName')}
-                  className={`bg-white/5 border-white/10 ${errors.firstName ? 'border-destructive' : ''}`}
+                  className={errors.firstName ? 'border-destructive' : ''}
                 />
                 {errors.firstName && <p className="text-sm text-destructive">{errors.firstName.message}</p>}
               </div>
@@ -183,7 +183,7 @@ export default function ProfilePage() {
                 <Input
                   id="lastName"
                   {...register('lastName')}
-                  className={`bg-white/5 border-white/10 ${errors.lastName ? 'border-destructive' : ''}`}
+                  className={errors.lastName ? 'border-destructive' : ''}
                 />
                 {errors.lastName && <p className="text-sm text-destructive">{errors.lastName.message}</p>}
               </div>
@@ -193,7 +193,6 @@ export default function ProfilePage() {
                   id="department"
                   {...register('department')}
                   placeholder="e.g. Computer Science"
-                  className="bg-white/5 border-white/10"
                 />
               </div>
               <div className="space-y-2">
@@ -202,7 +201,6 @@ export default function ProfilePage() {
                   id="phone"
                   {...register('phone')}
                   placeholder="+251..."
-                  className="bg-white/5 border-white/10"
                 />
               </div>
             </div>
@@ -214,18 +212,27 @@ export default function ProfilePage() {
                 rows={4}
                 {...register('bio')}
                 placeholder="Tell us a little bit about yourself"
-                className={`flex w-full rounded-md border bg-white/5 border-white/10 px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${errors.bio ? 'border-destructive' : ''}`}
+                className={`flex w-full rounded-2xl border border-white/25 dark:border-white/12 bg-white/60 dark:bg-white/[0.05] backdrop-blur-md px-3.5 py-2.5 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${errors.bio ? 'border-destructive' : ''}`}
               />
               {errors.bio && <p className="text-sm text-destructive">{errors.bio.message}</p>}
             </div>
 
-            <div className="flex justify-end gap-4 pt-4 border-t border-white/10">
-              <Button type="button" variant="outline" onClick={() => reset()} disabled={updateMutation.isPending} className="bg-transparent border-white/10">
+            <div className="flex justify-end gap-3 pt-4 border-t border-white/10 dark:border-white/5">
+              <Button type="button" variant="outline" onClick={() => reset()} disabled={updateMutation.isPending} className="rounded-xl">
                 Cancel
               </Button>
-              <Button type="submit" disabled={updateMutation.isPending} className="w-32">
-                {updateMutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {updateMutation.isPending ? 'Saving...' : 'Save Changes'}
+              <Button
+                type="submit"
+                disabled={isSubmitting || updateMutation.isPending}
+                className="rounded-xl px-6 bg-primary text-primary-foreground font-semibold"
+              >
+                {(isSubmitting || updateMutation.isPending) ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" /> Saving Changes...
+                  </>
+                ) : (
+                  'Save Changes'
+                )}
               </Button>
             </div>
           </form>

@@ -98,71 +98,77 @@ export default function AdminUsersPage() {
         />
       </div>
 
-      {/* Users List */}
+      {/* Users Grid (Rounded Edge Rectangle Glass Cards) */}
       {isLoading ? (
-        <div className="space-y-3">
-          {[1, 2, 3, 4, 5].map((i) => (
-            <Skeleton key={i} className="h-16 w-full rounded-xl" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <div key={i} className="h-48 w-full rounded-3xl bg-white/5 border border-white/10 animate-pulse" />
           ))}
         </div>
       ) : filteredUsers.length === 0 ? (
-        <Card className="bg-card border-border">
-          <CardContent className="py-12 text-center">
+        <Card className="rounded-3xl">
+          <CardContent className="py-16 text-center">
             <Users className="w-12 h-12 mx-auto text-muted-foreground/30 mb-3" />
-            <p className="text-muted-foreground">No users found</p>
+            <p className="text-muted-foreground text-base">No users found</p>
           </CardContent>
         </Card>
       ) : (
-        <div className="space-y-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {filteredUsers.map((user: any) => (
-            <Card key={user.id} className="bg-card border-border hover:border-primary/30 transition-colors">
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-4 flex-1 min-w-0">
-                    {/* Avatar */}
-                    <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm flex-shrink-0">
-                      {user.firstName?.[0]}{user.lastName?.[0]}
-                    </div>
-                    {/* Info */}
-                    <div className="min-w-0 flex-1">
-                      <h3 className="font-semibold text-foreground text-sm truncate">
-                        {user.firstName} {user.lastName}
-                      </h3>
-                      <div className="flex items-center gap-3 text-xs text-muted-foreground mt-0.5">
-                        <span className="flex items-center gap-1 truncate">
-                          <Mail className="w-3 h-3 flex-shrink-0" />
-                          {user.email}
-                        </span>
-                        {user.department && (
-                          <span className="hidden sm:flex items-center gap-1">
-                            <Building2 className="w-3 h-3" />
-                            {user.department}
-                          </span>
-                        )}
-                      </div>
-                    </div>
+            <Card 
+              key={user.id} 
+              className="group flex flex-col justify-between rounded-3xl p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40"
+            >
+              <div>
+                {/* Top Row: Avatar & Status Chips */}
+                <div className="flex items-start justify-between gap-3 mb-4">
+                  <div className="w-13 h-13 rounded-2xl bg-gradient-to-br from-primary/25 to-primary/5 border border-primary/30 flex items-center justify-center text-primary font-bold text-base shadow-sm group-hover:scale-105 transition-transform">
+                    {user.firstName?.[0]}{user.lastName?.[0]}
                   </div>
-
-                  {/* Right Side */}
-                  <div className="flex items-center gap-3 flex-shrink-0">
+                  <div className="flex flex-col items-end gap-1.5">
                     <Badge className={`text-xs ${getRoleBadge(user.role)}`}>
                       {user.role}
                     </Badge>
                     {user.isVerified ? (
-                      <Badge variant="outline" className="text-xs border-green-500/30 text-green-400">
+                      <Badge variant="outline" className="text-[11px] border-emerald-500/30 text-emerald-400 bg-emerald-500/10">
                         <UserCheck className="w-3 h-3 mr-1" /> Verified
                       </Badge>
                     ) : (
-                      <Badge variant="outline" className="text-xs border-yellow-500/30 text-yellow-400">
+                      <Badge variant="outline" className="text-[11px] border-amber-500/30 text-amber-400 bg-amber-500/10">
                         <UserX className="w-3 h-3 mr-1" /> Pending
                       </Badge>
                     )}
-                    <span className="text-xs text-muted-foreground hidden md:block">
-                      {user.createdAt ? format(new Date(user.createdAt), 'MMM d, yyyy') : ''}
-                    </span>
                   </div>
                 </div>
-              </CardContent>
+
+                {/* User Info */}
+                <div>
+                  <h3 className="font-bold text-base text-foreground group-hover:text-primary transition-colors">
+                    {user.firstName} {user.lastName}
+                  </h3>
+                  
+                  <div className="mt-2 space-y-1.5 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-1.5 truncate">
+                      <Mail className="w-3.5 h-3.5 text-primary shrink-0" />
+                      <span className="truncate">{user.email}</span>
+                    </div>
+                    {user.department && (
+                      <div className="flex items-center gap-1.5">
+                        <Building2 className="w-3.5 h-3.5 text-primary shrink-0" />
+                        <span className="truncate">{user.department}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Footer */}
+              <div className="mt-4 pt-3 border-t border-white/10 dark:border-white/5 flex items-center justify-between text-xs text-muted-foreground">
+                <span>Joined {user.createdAt ? format(new Date(user.createdAt), 'MMM yyyy') : 'Recently'}</span>
+                <span className="font-mono text-[10px] bg-white/40 dark:bg-white/10 px-2 py-0.5 rounded-full">
+                  {user.role}
+                </span>
+              </div>
             </Card>
           ))}
         </div>

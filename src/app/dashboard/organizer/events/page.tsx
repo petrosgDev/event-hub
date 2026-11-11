@@ -60,71 +60,91 @@ export default function ManageEventsPage() {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {events.map((event: any) => (
-            <Card key={event.id} className="bg-black/40 backdrop-blur-xl border-white/10 overflow-hidden hover:border-primary/50 transition-colors">
-              <div className="flex flex-col sm:flex-row h-full">
+            <Card key={event.id} className="group flex flex-col justify-between overflow-hidden rounded-3xl p-0 transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/40">
+              <div>
                 {/* Image Section */}
-                <div className="w-full sm:w-48 h-48 sm:h-auto shrink-0 relative bg-muted">
+                <div className="relative h-44 w-full bg-muted overflow-hidden rounded-t-3xl">
                   <img 
                     src={event.coverImage || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070'} 
                     alt={event.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute top-3 left-3 bg-black/80 backdrop-blur-md px-2.5 py-1 rounded-md text-xs font-semibold text-white border border-white/10">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  
+                  <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold text-white border border-white/20">
                     {event.status}
                   </div>
-                </div>
 
-                {/* Content Section */}
-                <div className="flex-1 p-5 flex flex-col">
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h3 className="font-bold text-lg leading-tight line-clamp-1">{event.title}</h3>
-                      <p className="text-sm text-primary mt-1">
-                        {format(new Date(event.date), 'MMM d, yyyy • h:mm a')}
-                      </p>
-                    </div>
-                    
+                  <div className="absolute top-3 right-3">
                     <DropdownMenu>
-                      <DropdownMenuTrigger>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-white -mr-2">
-                          <MoreVertical className="w-4 h-4" />
-                        </Button>
+                      <DropdownMenuTrigger render={<Button variant="ghost" size="icon-sm" className="rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-black/80 border border-white/20" />}>
+                        <MoreVertical className="w-4 h-4" />
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="w-40 bg-black/90 backdrop-blur-xl border-white/10 text-white">
-                        <DropdownMenuItem className="hover:bg-white/10 cursor-pointer">
+                      <DropdownMenuContent align="end" className="w-44 rounded-2xl bg-card/95 backdrop-blur-2xl border-white/15">
+                        <DropdownMenuItem className="rounded-xl hover:bg-white/10 cursor-pointer">
                           <Link href={`/events/${event.id}`} className="flex items-center w-full">
-                            <Eye className="w-4 h-4 mr-2" /> View Public
+                            <Eye className="w-4 h-4 mr-2 text-primary" /> View Public
                           </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="hover:bg-white/10 cursor-pointer">
-                          <Edit2 className="w-4 h-4 mr-2" /> Edit Event
+                        <DropdownMenuItem className="rounded-xl hover:bg-white/10 cursor-pointer">
+                          <Edit2 className="w-4 h-4 mr-2 text-primary" /> Edit Event
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive hover:bg-destructive/20 cursor-pointer">
+                        <DropdownMenuItem className="rounded-xl text-destructive hover:bg-destructive/15 cursor-pointer">
                           <Trash2 className="w-4 h-4 mr-2" /> Delete
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
 
-                  <p className="text-sm text-muted-foreground line-clamp-2 flex-1 mb-4">
-                    {event.description}
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-white/90">
+                    <span className="flex items-center gap-1">
+                      <Calendar className="w-3.5 h-3.5 text-primary" />
+                      {format(new Date(event.date), 'MMM d, yyyy')}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <MapPin className="w-3.5 h-3.5 text-primary" />
+                      <span className="truncate max-w-[120px]">{event.venue || 'TBA'}</span>
+                    </span>
+                  </div>
+                </div>
+
+                {/* Content Section */}
+                <div className="p-5 flex-1 flex flex-col">
+                  <h3 className="font-bold text-lg leading-tight line-clamp-1 group-hover:text-primary transition-colors mb-2">
+                    {event.title}
+                  </h3>
+
+                  <p className="text-xs text-muted-foreground line-clamp-2 mb-4">
+                    {event.description || 'No description provided.'}
                   </p>
 
-                  <div className="flex items-center justify-between text-sm pt-4 border-t border-white/5">
-                    <div className="flex items-center text-muted-foreground gap-1.5">
-                      <MapPin className="w-4 h-4" />
-                      <span className="truncate max-w-[120px]">
-                        {event.venue || 'TBA'}
+                  <div className="mt-auto space-y-1.5 pt-2">
+                    <div className="flex items-center justify-between text-xs text-muted-foreground">
+                      <span className="flex items-center gap-1.5 font-medium">
+                        <Users className="w-3.5 h-3.5 text-primary" />
+                        <span>Registered Attendees</span>
                       </span>
+                      <span className="font-bold text-primary">{event.registeredCount || 0} / {event.capacity || '∞'}</span>
                     </div>
-                    <div className="flex items-center text-muted-foreground gap-1.5">
-                      <Users className="w-4 h-4" />
-                      <span>{event.registeredCount || 0} / {event.capacity || '∞'}</span>
+                    <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-gradient-to-r from-primary to-amber-500"
+                        style={{ width: `${event.capacity ? Math.min(100, Math.round(((event.registeredCount || 0) / event.capacity) * 100)) : 0}%` }}
+                      />
                     </div>
                   </div>
                 </div>
+              </div>
+
+              {/* Bottom Actions */}
+              <div className="p-4 pt-0 border-t border-white/10 dark:border-white/5 flex items-center justify-between gap-2 pt-3">
+                <Link href={`/events/${event.id}`} className="w-full">
+                  <Button variant="outline" size="sm" className="w-full rounded-xl text-xs font-semibold gap-1.5">
+                    <Eye className="w-3.5 h-3.5" /> View Public Page
+                  </Button>
+                </Link>
               </div>
             </Card>
           ))}

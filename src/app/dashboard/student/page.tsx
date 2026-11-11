@@ -472,78 +472,93 @@ export default function StudentDashboard() {
                   <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-foreground">
                     <CalendarDays className="w-5 h-5 text-primary" /> Upcoming ({upcoming.length})
                   </h2>
-                  <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {upcoming.map((reg) => (
-                      <Card key={reg.id} className="bg-card border-border hover:border-primary/40 transition-colors overflow-hidden group">
-                        <div className="flex flex-col md:flex-row">
-                          <div className="w-full md:w-40 bg-gradient-to-br from-primary/20 to-secondary flex flex-col items-center justify-center p-5 gap-2 border-r border-border">
-                            <div className="w-20 h-20 bg-white rounded-xl p-2 shadow-lg group-hover:scale-105 transition-transform overflow-hidden">
+                      <Card key={reg.id} className="group flex flex-col justify-between overflow-hidden rounded-3xl p-0 transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/40">
+                        <div>
+                          <div className="p-6 bg-gradient-to-br from-primary/25 via-primary/10 to-transparent flex flex-col items-center justify-center border-b border-white/10 dark:border-white/5 relative">
+                            <div className="w-24 h-24 bg-white rounded-2xl p-2.5 shadow-xl group-hover:scale-105 transition-transform overflow-hidden">
                               {reg.qrCode ? (
                                 <img src={reg.qrCode} alt="Ticket QR Code" className="w-full h-full object-contain mix-blend-multiply" />
                               ) : (
                                 <QrCode className="w-full h-full text-black" />
                               )}
                             </div>
-                            <span className="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full uppercase">Ticket</span>
+                            <span className="mt-3 text-[11px] font-bold text-primary bg-primary/15 border border-primary/25 px-3 py-0.5 rounded-full uppercase tracking-wider">
+                              Valid Ticket
+                            </span>
                           </div>
-                          <div className="p-5 flex-1 flex flex-col justify-between">
-                            <div>
-                              <div className="flex justify-between items-start mb-2">
-                                <div>
-                                  <Badge variant="outline" className="border-primary/40 text-primary text-xs mb-1 font-bold">{reg.event.category?.name || 'General'}</Badge>
-                                  <h3 className="text-lg font-bold text-foreground">{reg.event.title}</h3>
-                                </div>
-                                <Badge className="bg-orange-500/10 text-orange-500 border-orange-500/30 text-xs font-bold shadow-[0_0_10px_rgba(249,115,22,0.1)]">
-                                  {formatDistanceToNow(new Date(reg.event.date), { addSuffix: true })}
-                                </Badge>
+
+                          <div className="p-5">
+                            <div className="flex justify-between items-start gap-2 mb-2">
+                              <Badge variant="outline" className="text-xs font-semibold">
+                                {reg.event.category?.name || 'General'}
+                              </Badge>
+                              <Badge className="bg-orange-500/15 text-orange-500 border border-orange-500/30 text-[11px] font-bold">
+                                {formatDistanceToNow(new Date(reg.event.date), { addSuffix: true })}
+                              </Badge>
+                            </div>
+
+                            <h3 className="text-lg font-bold text-foreground line-clamp-1 group-hover:text-primary transition-colors mb-3">
+                              {reg.event.title}
+                            </h3>
+
+                            <div className="space-y-1.5 text-xs text-muted-foreground font-medium">
+                              <div className="flex items-center gap-2">
+                                <CalendarDays className="w-3.5 h-3.5 text-primary shrink-0" />
+                                <span>{format(new Date(reg.event.date), 'MMM d, yyyy')}</span>
                               </div>
-                              <div className="grid grid-cols-2 gap-y-2 text-sm text-muted-foreground mb-4 font-medium">
-                                <span className="flex items-center gap-1.5"><CalendarDays className="w-3.5 h-3.5" /> {format(new Date(reg.event.date), 'MMM d, yyyy')}</span>
-                                <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> {reg.event.startTime} - {reg.event.endTime}</span>
-                                <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> {reg.event.location}</span>
+                              <div className="flex items-center gap-2">
+                                <Clock className="w-3.5 h-3.5 text-primary shrink-0" />
+                                <span>{reg.event.startTime} - {reg.event.endTime}</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <MapPin className="w-3.5 h-3.5 text-primary shrink-0" />
+                                <span className="truncate">{reg.event.location || 'DBU Campus'}</span>
                               </div>
                             </div>
-                            <div className="flex justify-end">
-                              <Dialog>
-                                <DialogTrigger render={<Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold" />}>
-                                  View Ticket
-                                </DialogTrigger>
-                                <DialogContent className="sm:max-w-md bg-card border-border">
-                                  <DialogHeader>
-                                    <DialogTitle className="text-foreground">Your Ticket: {reg.event.title}</DialogTitle>
-                                    <DialogDescription>
-                                      Show this QR code at the entrance to attend the event.
-                                    </DialogDescription>
-                                  </DialogHeader>
-                                  <div className="flex flex-col items-center justify-center p-6 bg-white/5 rounded-xl border border-border mt-4">
-                                    {reg.qrCode ? (
-                                      <div className="bg-white p-4 rounded-xl shadow-lg relative group">
-                                        <img src={reg.qrCode} alt="Ticket QR Code" className="w-64 h-64 object-contain mix-blend-multiply" />
-                                        <button 
-                                          onClick={() => {
-                                            navigator.clipboard.writeText(reg.qrToken || reg.id);
-                                            import('sonner').then(m => m.toast.success('Ticket ID copied to clipboard'));
-                                          }}
-                                          className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/80 text-white text-xs px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5"
-                                        >
-                                          Copy ID
-                                        </button>
-                                      </div>
-                                    ) : (
-                                      <div className="w-64 h-64 flex flex-col items-center justify-center border-2 border-dashed border-border rounded-xl text-muted-foreground bg-secondary/30">
-                                        <QrCode className="w-12 h-12 mb-2 opacity-50" />
-                                        <span>No QR Code available</span>
-                                      </div>
-                                    )}
-                                    <div className="mt-6 text-center">
-                                      <p className="font-bold text-lg text-foreground">{user?.firstName || 'Student'}</p>
-                                      <p className="text-sm text-muted-foreground uppercase tracking-widest">{reg.status}</p>
-                                    </div>
+                          </div>
+                        </div>
+
+                        <div className="p-4 pt-0 border-t border-white/10 dark:border-white/5 flex justify-end pt-3">
+                          <Dialog>
+                            <DialogTrigger render={<Button size="sm" className="rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 font-bold w-full" />}>
+                              View Ticket
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-md rounded-3xl bg-card/90 backdrop-blur-2xl border-white/20">
+                              <DialogHeader>
+                                <DialogTitle className="text-foreground">Your Ticket: {reg.event.title}</DialogTitle>
+                                <DialogDescription>
+                                  Show this QR code at the entrance to attend the event.
+                                </DialogDescription>
+                              </DialogHeader>
+                              <div className="flex flex-col items-center justify-center p-6 bg-white/5 rounded-2xl border border-white/10 mt-4">
+                                {reg.qrCode ? (
+                                  <div className="bg-white p-4 rounded-2xl shadow-xl relative group">
+                                    <img src={reg.qrCode} alt="Ticket QR Code" className="w-64 h-64 object-contain mix-blend-multiply" />
+                                    <button 
+                                      onClick={() => {
+                                        navigator.clipboard.writeText(reg.qrToken || reg.id);
+                                        import('sonner').then(m => m.toast.success('Ticket ID copied to clipboard'));
+                                      }}
+                                      className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/80 text-white text-xs px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5"
+                                    >
+                                      Copy ID
+                                    </button>
                                   </div>
-                                </DialogContent>
-                              </Dialog>
-                            </div>
-                          </div>
+                                ) : (
+                                  <div className="w-64 h-64 flex flex-col items-center justify-center border-2 border-dashed border-white/20 rounded-2xl text-muted-foreground bg-secondary/30">
+                                    <QrCode className="w-12 h-12 mb-2 opacity-50" />
+                                    <span>No QR Code available</span>
+                                  </div>
+                                )}
+                                <div className="mt-6 text-center">
+                                  <p className="font-bold text-lg text-foreground">{user?.firstName || 'Student'}</p>
+                                  <p className="text-sm text-muted-foreground uppercase tracking-widest">{reg.status}</p>
+                                </div>
+                              </div>
+                            </DialogContent>
+                          </Dialog>
                         </div>
                       </Card>
                     ))}
@@ -556,25 +571,34 @@ export default function StudentDashboard() {
                   <h2 className="text-xl font-bold mb-4 text-muted-foreground flex items-center gap-2">
                     <CheckCircle2 className="w-5 h-5" /> Past Events ({past.length})
                   </h2>
-                  <div className="space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     {past.map((reg) => (
-                      <div key={reg.id} className="flex items-center gap-4 p-4 rounded-xl bg-secondary border border-border opacity-70 hover:opacity-100 transition-opacity">
-                        <div className="w-10 h-10 rounded-xl bg-card border border-border flex items-center justify-center text-lg shrink-0">
-                          {reg.event.category?.icon || '✅'}
+                      <Card key={reg.id} className="group flex flex-col justify-between rounded-3xl p-5 hover:border-primary/40 transition-all">
+                        <div>
+                          <div className="flex items-center justify-between gap-3 mb-3">
+                            <div className="w-11 h-11 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center text-lg">
+                              {reg.event.category?.icon || '✅'}
+                            </div>
+                            <Badge variant="outline" className="border-emerald-500/30 text-emerald-400 font-bold text-xs bg-emerald-500/10">
+                              Attended
+                            </Badge>
+                          </div>
+                          <h4 className="font-bold text-base text-foreground line-clamp-1 group-hover:text-primary transition-colors">
+                            {reg.event.title}
+                          </h4>
+                          <p className="text-xs text-muted-foreground mt-1 font-medium">
+                            {format(new Date(reg.event.date), 'MMM d, yyyy')}
+                          </p>
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-bold text-sm text-foreground truncate">{reg.event.title}</h4>
-                          <p className="text-xs text-muted-foreground font-medium">{format(new Date(reg.event.date), 'MMM d, yyyy')}</p>
-                        </div>
-                        <div className="flex gap-2 shrink-0">
-                          <Badge variant="outline" className="border-green-500/30 text-green-500 font-bold text-xs bg-green-500/10">Attended</Badge>
+
+                        <div className="mt-4 pt-3 border-t border-white/10 dark:border-white/5 flex justify-end">
                           <Link href={`/dashboard/student/events/${reg.event.id}/feedback`}>
-                            <Button size="sm" variant="ghost" className="h-8 text-xs font-bold hover:text-primary border border-border bg-card">
-                              <Star className="w-3 h-3 mr-1" /> Review
+                            <Button size="sm" variant="ghost" className="rounded-xl h-8 text-xs font-bold hover:text-primary border border-white/15 bg-white/5">
+                              <Star className="w-3.5 h-3.5 mr-1 text-primary" /> Review Event
                             </Button>
                           </Link>
                         </div>
-                      </div>
+                      </Card>
                     ))}
                   </div>
                 </section>
