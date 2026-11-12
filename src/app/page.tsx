@@ -126,7 +126,7 @@ export default function LandingPage() {
               {/* 🏆 Interactive 3D Tilt Hero Stats Box */}
               <div className="max-w-5xl mx-auto mt-6">
                 <Card3D depth={8} className="w-full">
-                  <div className="p-6 md:p-8 rounded-3xl bg-white/45 dark:bg-black/35 backdrop-blur-2xl border-t border-t-white/60 dark:border-t-amber-400/40 border-b-2 border-b-amber-500/30 dark:border-b-amber-600/50 border-x border-x-white/30 dark:border-x-amber-500/20 shadow-[0_25px_60px_rgba(0,0,0,0.12),0_10px_25px_rgba(245,158,11,0.1)] dark:shadow-[0_30px_70px_rgba(0,0,0,0.7),0_15px_30px_rgba(245,158,11,0.15)]">
+                  <div className="p-6 md:p-8 rounded-3xl bg-white/45 dark:bg-black/35 backdrop-blur-2xl border-0 shadow-[0_25px_60px_rgba(0,0,0,0.12),0_10px_25px_rgba(245,158,11,0.1)] dark:shadow-[0_30px_70px_rgba(0,0,0,0.7),0_15px_30px_rgba(245,158,11,0.15)]">
                     <Card3DItem translateZ={30}>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                         {[
@@ -166,7 +166,7 @@ export default function LandingPage() {
               {(categories || []).slice(0, 10).map((cat: any) => (
                 <Card3D key={cat.id} depth={15} className="h-full">
                   <Link href={`/events/discover?category=${cat.slug}`}>
-                    <div className="group flex flex-col items-center gap-3 p-6 rounded-3xl bg-white/45 dark:bg-black/35 backdrop-blur-2xl border-t border-t-white/60 dark:border-t-amber-400/40 border-b-2 border-b-amber-500/30 dark:border-b-amber-600/50 border-x border-x-white/30 dark:border-x-amber-500/20 hover:border-amber-400/60 transition-all duration-300 cursor-pointer shadow-lg shadow-amber-500/5 hover:shadow-2xl hover:shadow-amber-500/20 h-full">
+                    <div className="group flex flex-col items-center gap-3 p-6 rounded-3xl bg-white/45 dark:bg-black/35 backdrop-blur-2xl border-0 transition-all duration-300 cursor-pointer shadow-lg shadow-amber-500/5 hover:shadow-2xl hover:shadow-amber-500/20 h-full">
                       <Card3DItem translateZ={35}>
                         <span className="text-5xl group-hover:scale-125 transition-transform duration-300 drop-shadow-md">{cat.icon}</span>
                       </Card3DItem>
@@ -282,7 +282,7 @@ export default function LandingPage() {
         <section className="py-20 relative bg-transparent perspective-1200">
           <div className="container mx-auto px-4 max-w-7xl">
             <Card3D depth={8} className="w-full">
-              <div className="p-8 md:p-12 rounded-3xl bg-white/45 dark:bg-black/35 backdrop-blur-2xl border-t border-t-white/60 dark:border-t-amber-400/40 border-b-2 border-b-amber-500/30 dark:border-b-amber-600/50 border-x border-x-white/30 dark:border-x-amber-500/20 shadow-2xl shadow-amber-500/10">
+              <div className="p-8 md:p-12 rounded-3xl bg-white/45 dark:bg-black/35 backdrop-blur-2xl border-0 shadow-2xl shadow-amber-500/10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
                   <div>
                     <Badge className="bg-amber-500/10 text-amber-500 border border-amber-500/30 rounded-full px-3.5 py-1 mb-4 font-semibold backdrop-blur-md">
@@ -348,7 +348,7 @@ export default function LandingPage() {
                 { icon: ShieldCheck, title: t('feature6Title'), description: t('feature6Desc') },
               ].map((feature, i) => (
                 <Card3D key={i} depth={12} className="h-full">
-                  <div className="group p-8 rounded-3xl bg-white/45 dark:bg-black/35 backdrop-blur-2xl border-t border-t-white/60 dark:border-t-amber-400/40 border-b-2 border-b-amber-500/30 dark:border-b-amber-600/50 border-x border-x-white/30 dark:border-x-amber-500/20 hover:border-amber-400/60 transition-all duration-300 shadow-xl shadow-amber-500/5 hover:shadow-2xl hover:shadow-amber-500/20 h-full flex flex-col">
+                  <div className="group p-8 rounded-3xl bg-white/45 dark:bg-black/35 backdrop-blur-2xl border-0 transition-all duration-300 shadow-xl shadow-amber-500/5 hover:shadow-2xl hover:shadow-amber-500/20 h-full flex flex-col">
                     <Card3DItem translateZ={35}>
                       <div className="w-14 h-14 rounded-2xl bg-amber-500/15 border border-amber-500/25 flex items-center justify-center mb-6 group-hover:bg-amber-500/25 group-hover:scale-110 transition-all shadow-md shadow-amber-500/10">
                         <feature.icon className="w-7 h-7 text-amber-500" />
@@ -369,7 +369,7 @@ export default function LandingPage() {
         <section className="py-20 relative bg-transparent perspective-1200">
           <div className="container mx-auto px-4 max-w-7xl">
             <Card3D depth={6} className="w-full">
-              <div className="p-8 md:p-14 rounded-3xl bg-white/40 dark:bg-black/30 backdrop-blur-2xl border-t border-t-white/60 dark:border-t-amber-400/40 border-b-2 border-b-amber-500/30 dark:border-b-amber-600/50 border-x border-x-white/30 dark:border-x-amber-500/20 shadow-2xl shadow-amber-500/10 relative overflow-hidden">
+              <div className="p-8 md:p-14 rounded-3xl bg-white/40 dark:bg-black/30 backdrop-blur-2xl border-0 shadow-2xl shadow-amber-500/10 relative overflow-hidden">
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px] pointer-events-none" />
                 
                 <div className="relative z-10">
@@ -446,8 +446,7 @@ export default function LandingPage() {
         <section className="py-24 relative overflow-hidden bg-transparent perspective-1200">
           <div className="container mx-auto px-4 max-w-5xl relative z-10">
             <Card3D depth={8} className="w-full">
-              <div className="relative p-10 md:p-16 rounded-3xl bg-gradient-to-b from-white/55 to-white/35 dark:from-black/45 dark:to-black/25 backdrop-blur-3xl border-t border-t-white/70 dark:border-t-amber-400/50 border-b-3 border-b-amber-500/40 dark:border-b-amber-600/60 border-x border-x-white/30 dark:border-x-amber-500/20 shadow-2xl shadow-amber-500/15 text-center overflow-hidden">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-amber-400/70 to-transparent" />
+              <div className="relative p-10 md:p-16 rounded-3xl bg-gradient-to-b from-white/55 to-white/35 dark:from-black/45 dark:to-black/25 backdrop-blur-3xl border-0 shadow-2xl shadow-amber-500/15 text-center overflow-hidden">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] bg-amber-500/15 rounded-full blur-[120px] pointer-events-none" />
                 
                 <div className="relative z-10">

@@ -218,18 +218,18 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <CommandPalette />
         
         {/* 🌟 FLOATING ROUNDED-2XL GLASS TOP HEADER */}
-        <header className="sticky top-3 md:top-4 mx-4 md:mx-6 z-20 rounded-2xl border border-white/30 dark:border-amber-500/20 bg-white/40 dark:bg-black/35 backdrop-blur-2xl px-6 h-14 flex items-center justify-between shadow-xl shadow-amber-500/5 transition-all">
+        <header className="sticky top-3 md:top-4 mx-4 md:mx-6 z-20 rounded-2xl border-0 bg-white/40 dark:bg-black/35 backdrop-blur-2xl px-6 h-14 flex items-center justify-between shadow-xl shadow-amber-500/5 transition-all">
           <div className="flex-1 flex items-center">
             {/* Global Search Trigger */}
             <button
               onClick={() => {
                 document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true }));
               }}
-              className="hidden md:flex items-center gap-2 px-3.5 py-1.5 text-sm text-muted-foreground bg-white/40 dark:bg-white/[0.05] hover:bg-white/60 dark:hover:bg-white/[0.08] border border-white/25 dark:border-amber-500/20 rounded-xl backdrop-blur-md transition-all group shadow-sm"
+              className="hidden md:flex items-center gap-2 px-3.5 py-1.5 text-sm text-muted-foreground bg-white/40 dark:bg-white/[0.05] hover:bg-white/60 dark:hover:bg-white/[0.08] border-0 rounded-xl backdrop-blur-md transition-all group shadow-sm"
             >
               <Search className="w-4 h-4 text-amber-500/80 group-hover:text-amber-500 transition-colors" />
               <span>Ask AI...</span>
-              <kbd className="ml-4 bg-white/60 dark:bg-white/10 px-2 py-0.5 rounded-lg border border-white/20 dark:border-amber-500/20 font-mono text-[10px] font-bold text-foreground/80">Ctrl+K</kbd>
+              <kbd className="ml-4 bg-white/60 dark:bg-white/10 px-2 py-0.5 rounded-lg border-0 font-mono text-[10px] font-bold text-foreground/80">Ctrl+K</kbd>
             </button>
           </div>
           <NotificationDropdown />

@@ -129,7 +129,7 @@ export default function RegisterPage() {
       <div className="mb-6 flex items-center justify-between">
         <Link 
           href="/" 
-          className="inline-flex items-center gap-2 text-xs font-bold text-muted-foreground hover:text-amber-400 px-3 py-1.5 rounded-full bg-white/20 dark:bg-white/5 border border-white/20 dark:border-amber-500/20 hover:border-amber-500/40 backdrop-blur-md transition-all group"
+          className="inline-flex items-center gap-2 text-xs font-bold text-muted-foreground hover:text-amber-400 px-3 py-1.5 rounded-full bg-white/20 dark:bg-white/5 border-0 hover:bg-white/30 backdrop-blur-md transition-all group"
         >
           <ArrowLeft className="w-3.5 h-3.5 text-amber-500 group-hover:-translate-x-1 transition-transform" />
           <span>Back to Landing Page</span>
@@ -167,7 +167,7 @@ export default function RegisterPage() {
                     id="firstName" name="firstName"
                     placeholder="Abebe"
                     value={formData.firstName} onChange={handleChange}
-                    className={`bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40 ${errors.firstName ? 'border-destructive' : ''}`}
+                    className={`bg-white/50 dark:bg-black/40 border-0 rounded-2xl h-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-amber-500/50 shadow-inner ${errors.firstName ? 'border border-destructive' : ''}`}
                   />
                   {errors.firstName && <p className="text-xs text-destructive">{errors.firstName}</p>}
                 </div>
@@ -177,7 +177,7 @@ export default function RegisterPage() {
                     id="lastName" name="lastName"
                     placeholder="Kebede"
                     value={formData.lastName} onChange={handleChange}
-                    className={`bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40 ${errors.lastName ? 'border-destructive' : ''}`}
+                    className={`bg-white/50 dark:bg-black/40 border-0 rounded-2xl h-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-amber-500/50 shadow-inner ${errors.lastName ? 'border border-destructive' : ''}`}
                   />
                   {errors.lastName && <p className="text-xs text-destructive">{errors.lastName}</p>}
                 </div>
@@ -203,7 +203,7 @@ export default function RegisterPage() {
                   id="email" name="email" type="email"
                   placeholder="student@dbu.edu.et"
                   value={formData.email} onChange={handleChange}
-                  className={`bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40 ${errors.email ? 'border-destructive' : ''}`}
+                  className={`bg-white/50 dark:bg-black/40 border-0 rounded-2xl h-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-amber-500/50 shadow-inner ${errors.email ? 'border border-destructive' : ''}`}
                 />
                 {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
               </div>
@@ -214,7 +214,7 @@ export default function RegisterPage() {
                     id="password" name="password" type={showPassword ? "text" : "password"}
                     value={formData.password} onChange={handleChange}
                     placeholder="••••••••"
-                    className={`bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base pr-11 text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40 ${errors.password ? 'border-destructive' : ''}`}
+                    className={`bg-white/50 dark:bg-black/40 border-0 rounded-2xl h-12 text-base pr-11 text-foreground placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-amber-500/50 shadow-inner ${errors.password ? 'border border-destructive' : ''}`}
                   />
                   <button
                     type="button"
@@ -233,7 +233,7 @@ export default function RegisterPage() {
                     id="confirmPassword" name="confirmPassword" type={showConfirmPassword ? "text" : "password"}
                     value={formData.confirmPassword} onChange={handleChange}
                     placeholder="••••••••"
-                    className={`bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base pr-11 text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40 ${errors.confirmPassword ? 'border-destructive' : ''}`}
+                    className={`bg-white/50 dark:bg-black/40 border-0 rounded-2xl h-12 text-base pr-11 text-foreground placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-amber-500/50 shadow-inner ${errors.confirmPassword ? 'border border-destructive' : ''}`}
                   />
                   <button
                     type="button"
@@ -246,7 +246,7 @@ export default function RegisterPage() {
                 {errors.confirmPassword && <p className="text-xs text-destructive">{errors.confirmPassword}</p>}
               </div>
               <div className="flex gap-3 pt-2">
-                <Button type="button" variant="outline" onClick={() => setStep(1)} className="px-4 rounded-2xl bg-white/40 dark:bg-black/30 border-white/30 dark:border-amber-500/20 hover:bg-amber-500/10">
+                <Button type="button" variant="outline" onClick={() => setStep(1)} className="px-4 rounded-2xl bg-white/40 dark:bg-black/30 border-0 hover:bg-amber-500/10">
                   <ArrowLeft className="w-4 h-4" />
                 </Button>
                 <Button type="submit" className="flex-1 h-12 text-base font-bold rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground btn-3d-golden" disabled={isLoading}>

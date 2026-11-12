@@ -65,7 +65,7 @@ export default function LoginPage() {
       <div className="mb-6 flex items-center justify-between">
         <Link 
           href="/" 
-          className="inline-flex items-center gap-2 text-xs font-bold text-muted-foreground hover:text-amber-400 px-3 py-1.5 rounded-full bg-white/20 dark:bg-white/5 border border-white/20 dark:border-amber-500/20 hover:border-amber-500/40 backdrop-blur-md transition-all group"
+          className="inline-flex items-center gap-2 text-xs font-bold text-muted-foreground hover:text-amber-400 px-3 py-1.5 rounded-full bg-white/20 dark:bg-white/5 border-0 hover:bg-white/30 backdrop-blur-md transition-all group"
         >
           <ArrowLeft className="w-3.5 h-3.5 text-amber-500 group-hover:-translate-x-1 transition-transform" />
           <span>Back to Landing Page</span>
@@ -90,7 +90,7 @@ export default function LoginPage() {
             placeholder="student@dbu.edu.et"
             value={formData.email}
             onChange={handleChange}
-            className="bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40"
+            className="bg-white/50 dark:bg-black/40 border-0 rounded-2xl h-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-amber-500/50 shadow-inner"
             disabled={isLoading}
           />
         </div>
@@ -107,7 +107,7 @@ export default function LoginPage() {
               placeholder="••••••••"
               value={formData.password}
               onChange={handleChange}
-              className="bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base pr-11 text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40"
+              className="bg-white/50 dark:bg-black/40 border-0 rounded-2xl h-12 text-base pr-11 text-foreground placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-amber-500/50 shadow-inner"
               disabled={isLoading}
             />
             <button
