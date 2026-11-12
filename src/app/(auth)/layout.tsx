@@ -6,32 +6,32 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-transparent">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay z-0"></div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/15 blur-[140px] rounded-full pointer-events-none z-0" />
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-500/15 blur-[120px] rounded-full pointer-events-none z-0" />
+    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-transparent font-sans">
+      {/* Background Effects (Golden Ambient Orbs) */}
+      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-15 mix-blend-overlay z-0 pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-amber-500/15 blur-[140px] rounded-full pointer-events-none z-0" />
+      <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-yellow-500/10 blur-[120px] rounded-full pointer-events-none z-0" />
       
-      {/* Top Left Logo */}
-      <Link href="/" className="absolute top-8 left-8 z-20 flex items-center gap-2 hover:opacity-80 transition-opacity">
-        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-orange-400 flex items-center justify-center shadow-lg shadow-primary/20">
-          <span className="text-white font-bold">⚡</span>
+      {/* Floating Glass Brand Pill Top Left */}
+      <Link href="/" className="absolute top-6 left-6 z-20 flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/40 dark:bg-black/35 backdrop-blur-xl border border-white/30 dark:border-amber-500/25 shadow-lg shadow-amber-500/5 hover:scale-105 transition-all">
+        <div className="w-7 h-7 rounded-full bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-500 font-extrabold text-xs shadow-sm">
+          ⚡
         </div>
-        <span className="text-xl font-bold tracking-tight">EventHub <span className="text-primary">DBU</span></span>
+        <span className="text-sm font-extrabold tracking-tight text-foreground">EventHub <span className="text-amber-500">DBU</span></span>
       </Link>
 
-      {/* Centered Form Container */}
+      {/* Centered Form Container (High-Transparency Rounded-3xl Glass Card) */}
       <div className="relative z-10 w-full max-w-lg p-6">
-        <div className="bg-white/75 dark:bg-black/45 backdrop-blur-3xl border border-white/40 dark:border-white/12 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.6)] p-8 md:p-10 overflow-hidden relative">
-          {/* Inner card specular rim highlight */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-70" />
+        <div className="bg-white/40 dark:bg-black/35 backdrop-blur-3xl border border-white/30 dark:border-amber-500/25 rounded-3xl shadow-2xl shadow-amber-500/10 p-8 md:p-10 overflow-hidden relative">
+          {/* Inner card specular glow */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[240px] h-[1px] bg-gradient-to-r from-transparent via-amber-400 to-transparent opacity-80" />
           
           {children}
         </div>
       </div>
       
-      <div className="absolute bottom-8 z-10 text-sm text-muted-foreground">
-        © 2026 EventHub DBU. Designed for the modern student.
+      <div className="relative z-10 text-xs text-muted-foreground font-medium mt-2">
+        © {new Date().getFullYear()} EventHub DBU · Debre Birhan University.
       </div>
     </div>
   );

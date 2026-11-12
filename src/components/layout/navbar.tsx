@@ -27,15 +27,15 @@ export function Navbar() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/20 dark:border-white/10 bg-background/75 dark:bg-background/50 backdrop-blur-2xl shadow-[0_4px_24px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
+    <header className="sticky top-3 md:top-4 z-50 w-full px-3 md:px-6 transition-all duration-300">
+      <div className="max-w-7xl mx-auto rounded-2xl md:rounded-3xl border border-white/30 dark:border-amber-500/25 bg-background/50 dark:bg-black/35 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.25)] shadow-amber-500/10 px-4 md:px-6 h-16 flex items-center justify-between gap-4">
         
         {/* Left Side: Logo & Search Bar */}
         <div className="flex items-center gap-6 flex-1">
           <Link href="/" className="flex items-center gap-2 flex-shrink-0 group">
             <div className="relative flex items-center justify-center w-10 h-10 transition-transform duration-300 group-hover:scale-105">
-              <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_4px_8px_rgba(249,115,22,0.4)]" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="45" fill="url(#bgGradient)" className="opacity-10 group-hover:opacity-25 transition-opacity duration-500" />
+              <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_4px_12px_rgba(245,158,11,0.5)]" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" fill="url(#bgGradient)" className="opacity-15 group-hover:opacity-30 transition-opacity duration-500" />
                 <path 
                   d="M 80 55 C 80 55 80 30 50 30 C 20 30 20 60 50 80 C 70 93 85 80 85 80" 
                   stroke="url(#paint0_linear)" 
@@ -51,22 +51,22 @@ export function Navbar() {
                 />
                 <defs>
                   <linearGradient id="bgGradient" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#f97316" />
-                    <stop offset="1" stopColor="#ea580c" />
+                    <stop stopColor="#f59e0b" />
+                    <stop offset="1" stopColor="#d97706" />
                   </linearGradient>
                   <linearGradient id="paint0_linear" x1="20" y1="30" x2="85" y2="80" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#f97316" />
-                    <stop offset="1" stopColor="#c2410c" />
+                    <stop stopColor="#fbbf24" />
+                    <stop offset="1" stopColor="#d97706" />
                   </linearGradient>
                   <linearGradient id="paint1_linear" x1="22" y1="55" x2="75" y2="55" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#fb923c" />
-                    <stop offset="1" stopColor="#ea580c" />
+                    <stop stopColor="#fde68a" />
+                    <stop offset="1" stopColor="#f59e0b" />
                   </linearGradient>
                 </defs>
               </svg>
             </div>
             <span className="font-extrabold text-2xl tracking-tight text-foreground ml-1">
-              EventHub <span className="text-primary font-bold">DBU</span>
+              EventHub <span className="text-amber-500 font-extrabold drop-shadow-[0_0_12px_rgba(245,158,11,0.4)]">DBU</span>
             </span>
           </Link>
           
@@ -79,9 +79,9 @@ export function Navbar() {
                 router.push('/events/discover');
               }
             }}
-            className="hidden md:flex items-center bg-white/50 dark:bg-white/[0.06] border border-white/30 dark:border-white/10 backdrop-blur-md rounded-full px-4 py-1.5 max-w-sm flex-1 transition-all focus-within:border-primary/60 focus-within:ring-2 focus-within:ring-primary/20 shadow-sm"
+            className="hidden md:flex items-center bg-white/40 dark:bg-white/[0.04] border border-white/25 dark:border-amber-500/20 backdrop-blur-xl rounded-full px-4 py-1.5 max-w-sm flex-1 transition-all focus-within:border-amber-500/70 focus-within:ring-2 focus-within:ring-amber-500/25 shadow-sm"
           >
-            <Search className="w-4 h-4 mr-2.5 text-muted-foreground shrink-0" />
+            <Search className="w-4 h-4 mr-2.5 text-amber-500/80 shrink-0" />
             <input 
               type="text" 
               value={searchQuery}
@@ -202,13 +202,13 @@ export function Navbar() {
               </Link>
               <Link href="/register">
                 <motion.div
-                  whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(249, 115, 22, 0.5)" }}
+                  whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(245, 158, 11, 0.6)" }}
                   whileTap={{ scale: 0.95 }}
-                  className="rounded-md"
+                  className="rounded-full"
                 >
-                  <Button className="bg-gradient-to-r from-primary to-orange-500 text-primary-foreground border-none font-bold flex items-center gap-2 relative overflow-hidden group">
-                    <span className="absolute inset-0 w-full h-full bg-white/20 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] skew-x-12" />
-                    <UserPlus className="w-4 h-4 relative z-10" />
+                  <Button className="rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-black border-none font-bold flex items-center gap-2 px-5 shadow-lg shadow-amber-500/25 relative overflow-hidden group">
+                    <span className="absolute inset-0 w-full h-full bg-white/25 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] skew-x-12" />
+                    <UserPlus className="w-4 h-4 relative z-10 text-black" />
                     <span className="relative z-10">{t('getStarted')}</span>
                   </Button>
                 </motion.div>
@@ -240,11 +240,11 @@ export function Navbar() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
+            initial={{ height: 0, opacity: 0, y: -10 }}
+            animate={{ height: 'auto', opacity: 1, y: 0 }}
+            exit={{ height: 0, opacity: 0, y: -10 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="xl:hidden overflow-hidden border-b border-border bg-popover/95 backdrop-blur-3xl absolute top-[100%] left-0 right-0 shadow-2xl"
+            className="xl:hidden overflow-hidden rounded-3xl border border-white/25 dark:border-amber-500/25 bg-background/85 dark:bg-black/85 backdrop-blur-3xl mt-3 shadow-2xl shadow-amber-500/10"
           >
             <div className="flex flex-col p-4 gap-2">
               <Link href="/events/discover" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3 p-3 rounded-lg hover:bg-secondary text-foreground/70 hover:text-foreground transition-all">

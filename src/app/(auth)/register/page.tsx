@@ -48,7 +48,6 @@ export default function RegisterPage() {
   });
 
   const validateField = (field: keyof RegisterFormValues, value: string) => {
-    // Only validate the specific field manually to avoid ZodEffects shape issues
     let errorMsg: string | undefined = undefined;
     
     if (field === 'firstName' && value.length < 2) errorMsg = 'First name is required';
@@ -69,7 +68,6 @@ export default function RegisterPage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
     validateField(name as keyof RegisterFormValues, value);
     
-    // Special check for confirm password
     if (name === 'confirmPassword' || name === 'password') {
       const confirmVal = name === 'confirmPassword' ? value : formData.confirmPassword;
       const passVal = name === 'password' ? value : formData.password;
@@ -98,7 +96,7 @@ export default function RegisterPage() {
     } catch (error) {
       if (error instanceof z.ZodError) {
         const newErrors: any = {};
-        error.issues.forEach(err => {
+        error.issues.forEach((err) => {
           if (err.path[0]) newErrors[err.path[0]] = err.message;
         });
         setErrors(newErrors);
@@ -108,15 +106,19 @@ export default function RegisterPage() {
 
     try {
       setIsLoading(true);
-      const { confirmPassword, ...submitData } = formData;
-      const response = await api.post('/auth/register', submitData);
-      const { user, accessToken } = response.data.data;
-      
+      const res = await api.post('/auth/register', {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        password: formData.password,
+        role: 'STUDENT',
+      });
+      const { user, accessToken } = res.data.data;
       setAuth(user, accessToken);
       toast.success('Account created successfully!');
       router.push('/dashboard/student');
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Failed to register');
+    } catch (err: any) {
+      toast.error(err.response?.data?.message || 'Failed to create account');
     } finally {
       setIsLoading(false);
     }
@@ -124,16 +126,16 @@ export default function RegisterPage() {
 
   return (
     <Card className="border-none shadow-none bg-transparent">
-      <CardHeader className="px-0 pt-0">
-        <CardTitle className="text-3xl font-bold">Create an account</CardTitle>
-        <CardDescription className="text-base">
-          Join EventHub to discover amazing events on campus
+      <CardHeader className="px-0 pt-0 text-center">
+        <CardTitle className="text-3xl font-extrabold tracking-tight text-foreground">Create Account</CardTitle>
+        <CardDescription className="text-muted-foreground text-sm mt-1">
+          Join EventHub to discover amazing events at Debre Birhan University
         </CardDescription>
       </CardHeader>
       <CardContent className="px-0">
         <div className="flex gap-2 mb-8">
-          <div className={`h-1.5 flex-1 rounded-full ${step >= 1 ? 'bg-primary' : 'bg-white/10'}`} />
-          <div className={`h-1.5 flex-1 rounded-full ${step >= 2 ? 'bg-primary' : 'bg-white/10'}`} />
+          <div className={`h-1.5 flex-1 rounded-full transition-all ${step >= 1 ? 'bg-amber-500 shadow-sm shadow-amber-500/50' : 'bg-white/20'}`} />
+          <div className={`h-1.5 flex-1 rounded-full transition-all ${step >= 2 ? 'bg-amber-500 shadow-sm shadow-amber-500/50' : 'bg-white/20'}`} />
         </div>
 
         <form onSubmit={onSubmit} className="relative min-h-[280px]">
@@ -149,27 +151,27 @@ export default function RegisterPage() {
               >
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="firstName">First name</Label>
+                    <Label htmlFor="firstName" className="text-muted-foreground text-sm font-semibold">First name</Label>
                     <Input
                       id="firstName" name="firstName"
-                      placeholder="John"
+                      placeholder="Abebe"
                       value={formData.firstName} onChange={handleChange}
-                      className={`bg-white/5 border-white/10 ${errors.firstName ? 'border-destructive' : ''}`}
+                      className={`bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40 ${errors.firstName ? 'border-destructive' : ''}`}
                     />
-                    {errors.firstName && <p className="text-sm text-destructive">{errors.firstName}</p>}
+                    {errors.firstName && <p className="text-xs text-destructive">{errors.firstName}</p>}
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="lastName">Last name</Label>
+                    <Label htmlFor="lastName" className="text-muted-foreground text-sm font-semibold">Last name</Label>
                     <Input
                       id="lastName" name="lastName"
-                      placeholder="Doe"
+                      placeholder="Kebede"
                       value={formData.lastName} onChange={handleChange}
-                      className={`bg-white/5 border-white/10 ${errors.lastName ? 'border-destructive' : ''}`}
+                      className={`bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40 ${errors.lastName ? 'border-destructive' : ''}`}
                     />
-                    {errors.lastName && <p className="text-sm text-destructive">{errors.lastName}</p>}
+                    {errors.lastName && <p className="text-xs text-destructive">{errors.lastName}</p>}
                   </div>
                 </div>
-                <Button type="button" onClick={nextStep} className="w-full h-11 text-md mt-6">
+                <Button type="button" onClick={nextStep} className="w-full h-12 text-base font-bold rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-amber-500/25 mt-6">
                   Continue <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </motion.div>
@@ -185,58 +187,60 @@ export default function RegisterPage() {
                 className="space-y-4"
               >
                 <div className="space-y-2">
-                  <Label htmlFor="email">University Email</Label>
+                  <Label htmlFor="email" className="text-muted-foreground text-sm font-semibold">University Email</Label>
                   <Input
                     id="email" name="email" type="email"
                     placeholder="student@dbu.edu.et"
                     value={formData.email} onChange={handleChange}
-                    className={`bg-white/5 border-white/10 ${errors.email ? 'border-destructive' : ''}`}
+                    className={`bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40 ${errors.email ? 'border-destructive' : ''}`}
                   />
-                  {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
+                  {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password" className="text-muted-foreground text-sm font-semibold">Password</Label>
                   <div className="relative">
                     <Input
                       id="password" name="password" type={showPassword ? "text" : "password"}
                       value={formData.password} onChange={handleChange}
-                      className={`bg-white/5 border-white/10 pr-10 ${errors.password ? 'border-destructive' : ''}`}
+                      placeholder="••••••••"
+                      className={`bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base pr-11 text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40 ${errors.password ? 'border-destructive' : ''}`}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-white transition-colors"
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-amber-500 transition-colors"
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                   </div>
-                  {errors.password && <p className="text-sm text-destructive">{errors.password}</p>}
+                  {errors.password && <p className="text-xs text-destructive">{errors.password}</p>}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">Confirm Password</Label>
+                  <Label htmlFor="confirmPassword" className="text-muted-foreground text-sm font-semibold">Confirm Password</Label>
                   <div className="relative">
                     <Input
                       id="confirmPassword" name="confirmPassword" type={showConfirmPassword ? "text" : "password"}
                       value={formData.confirmPassword} onChange={handleChange}
-                      className={`bg-white/5 border-white/10 pr-10 ${errors.confirmPassword ? 'border-destructive' : ''}`}
+                      placeholder="••••••••"
+                      className={`bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base pr-11 text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40 ${errors.confirmPassword ? 'border-destructive' : ''}`}
                     />
                     <button
                       type="button"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-white transition-colors"
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-amber-500 transition-colors"
                     >
                       {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                   </div>
-                  {errors.confirmPassword && <p className="text-sm text-destructive">{errors.confirmPassword}</p>}
+                  {errors.confirmPassword && <p className="text-xs text-destructive">{errors.confirmPassword}</p>}
                 </div>
                 <div className="flex gap-3 pt-2">
-                  <Button type="button" variant="outline" onClick={() => setStep(1)} className="px-3 bg-white/5 border-white/10 hover:bg-white/10">
+                  <Button type="button" variant="outline" onClick={() => setStep(1)} className="px-4 rounded-2xl bg-white/40 dark:bg-black/30 border-white/30 dark:border-amber-500/20 hover:bg-amber-500/10">
                     <ArrowLeft className="w-4 h-4" />
                   </Button>
-                  <Button type="submit" className="flex-1 h-11 text-md" disabled={isLoading}>
+                  <Button type="submit" className="flex-1 h-12 text-base font-bold rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-amber-500/25" disabled={isLoading}>
                     {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    {isLoading ? 'Creating account...' : 'Create account'}
+                    {isLoading ? 'Creating account...' : 'Create Account'}
                   </Button>
                 </div>
               </motion.div>
@@ -246,8 +250,8 @@ export default function RegisterPage() {
       </CardContent>
       <CardFooter className="px-0 justify-center text-sm text-muted-foreground mt-4">
         Already have an account?{' '}
-        <Link href="/login" className="ml-1 text-primary hover:underline font-medium">
-          Sign in
+        <Link href="/login" className="ml-1 text-amber-500 hover:underline font-bold">
+          Sign In
         </Link>
       </CardFooter>
     </Card>

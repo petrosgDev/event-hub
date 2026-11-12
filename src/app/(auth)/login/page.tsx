@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -63,12 +64,13 @@ export default function LoginPage() {
     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
       <Card className="border-none shadow-none bg-transparent">
         <CardHeader className="px-0 pt-0 text-center">
-          <CardTitle className="text-3xl font-bold">Welcome Back</CardTitle>
+          <CardTitle className="text-3xl font-extrabold tracking-tight text-foreground">Welcome Back</CardTitle>
+          <p className="text-sm text-muted-foreground mt-1">Sign in with your Debre Birhan University credentials</p>
         </CardHeader>
         <CardContent className="px-0">
-          <form onSubmit={onSubmit} className="space-y-6 mt-4">
+          <form onSubmit={onSubmit} className="space-y-5 mt-4">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-muted-foreground text-base">Enter Email</Label>
+              <Label htmlFor="email" className="text-muted-foreground text-sm font-semibold">Email Address</Label>
               <Input
                 id="email"
                 name="email"
@@ -76,36 +78,47 @@ export default function LoginPage() {
                 placeholder="student@dbu.edu.et"
                 value={formData.email}
                 onChange={handleChange}
-                className="bg-white/5 border-white/10 h-12 text-lg"
+                className="bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40"
                 disabled={isLoading}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-muted-foreground text-base">Enter Password</Label>
+              <div className="flex justify-between items-center">
+                <Label htmlFor="password" className="text-muted-foreground text-sm font-semibold">Password</Label>
+                <Link href="#" className="text-xs text-amber-500 hover:text-amber-400 font-semibold">Forgot password?</Link>
+              </div>
               <div className="relative">
                 <Input
                   id="password"
                   name="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="Your Password"
+                  placeholder="••••••••"
                   value={formData.password}
                   onChange={handleChange}
-                  className="bg-white/5 border-white/10 h-12 text-lg pr-10"
+                  className="bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base pr-11 text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40"
                   disabled={isLoading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-white transition-colors"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-amber-500 transition-colors"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
             </div>
-            <Button type="submit" className="w-full h-12 text-lg font-bold mt-4" disabled={isLoading}>
-              {isLoading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
-              {isLoading ? 'Signing in...' : 'Sign in'}
+            <Button type="submit" className="w-full h-12 text-base font-bold rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-amber-500/25 mt-2" disabled={isLoading}>
+              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              {isLoading ? 'Signing in...' : 'Sign In'}
             </Button>
+            <div className="text-center pt-2">
+              <p className="text-xs text-muted-foreground font-medium">
+                Don't have an account?{' '}
+                <Link href="/register" className="text-amber-500 font-bold hover:underline">
+                  Create one now
+                </Link>
+              </p>
+            </div>
           </form>
         </CardContent>
       </Card>

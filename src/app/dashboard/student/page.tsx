@@ -105,10 +105,10 @@ export default function StudentDashboard() {
   const past = registrations.filter((r) => isPast(new Date(r.event.date)));
 
   const stats = [
-    { title: 'Registered Events', value: registrations.length, icon: Ticket, color: 'text-primary' },
-    { title: 'Upcoming', value: upcoming.length, icon: CalendarDays, color: 'text-orange-400' },
+    { title: 'Registered Events', value: registrations.length, icon: Ticket, color: 'text-amber-500' },
+    { title: 'Upcoming', value: upcoming.length, icon: CalendarDays, color: 'text-amber-400' },
     { title: 'Certificates', value: certificates.length, icon: Award, color: 'text-yellow-400' },
-    { title: 'Attendance Rate', value: registrations.length > 0 ? `${Math.round((past.filter(r => r.status === 'CONFIRMED').length / Math.max(past.length, 1)) * 100)}%` : '—', icon: Activity, color: 'text-green-400' },
+    { title: 'Attendance Rate', value: registrations.length > 0 ? `${Math.round((past.filter(r => r.status === 'CONFIRMED').length / Math.max(past.length, 1)) * 100)}%` : '—', icon: Activity, color: 'text-emerald-400' },
   ];
 
   const sections = [
@@ -148,14 +148,14 @@ export default function StudentDashboard() {
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((s, i) => (
-          <Card key={i} className="bg-card border-border hover:border-primary/40 transition-colors">
+          <Card key={i} className="hover:border-amber-400/50 hover:shadow-xl hover:shadow-amber-500/10 transition-all">
             <CardContent className="p-5 flex items-center gap-4">
-              <div className={`p-3 rounded-xl bg-secondary ${s.color}`}>
+              <div className={`p-3 rounded-2xl bg-amber-500/15 border border-amber-500/25 ${s.color}`}>
                 <s.icon className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-xs text-muted-foreground font-medium">{s.title}</p>
-                <h3 className="text-2xl font-bold text-foreground">{s.value}</h3>
+                <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">{s.title}</p>
+                <h3 className="text-2xl font-extrabold text-foreground">{s.value}</h3>
               </div>
             </CardContent>
           </Card>
@@ -163,13 +163,13 @@ export default function StudentDashboard() {
       </div>
 
       {/* Section Tabs */}
-      <div className="flex gap-1 p-1 bg-secondary/50 rounded-xl border border-border w-full overflow-x-auto">
+      <div className="flex gap-1.5 p-1.5 bg-white/40 dark:bg-black/30 backdrop-blur-2xl rounded-2xl border border-white/30 dark:border-amber-500/20 shadow-md shadow-amber-500/5 w-full overflow-x-auto">
         {sections.map((s) => (
           <button key={s.id} onClick={() => setActiveSection(s.id)}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-bold whitespace-nowrap transition-all ${
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap transition-all ${
               activeSection === s.id
-                ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20'
-                : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
+                ? 'bg-primary text-primary-foreground shadow-lg shadow-amber-500/25'
+                : 'text-muted-foreground hover:text-foreground hover:bg-white/30 dark:hover:bg-amber-500/10'
             }`}>
             <s.icon className="w-4 h-4" />
             {s.label}
@@ -192,9 +192,9 @@ export default function StudentDashboard() {
                   const next = upcoming[0];
                   const timeLeft = formatDistanceToNow(new Date(next.event.date), { addSuffix: true });
                   return (
-                    <Card className="bg-card border-border overflow-hidden group hover:border-primary/40 transition-colors">
+                    <Card className="rounded-3xl overflow-hidden group hover:border-amber-400/50 transition-all shadow-xl shadow-amber-500/5">
                       <div className="flex flex-col md:flex-row">
-                        <div className="w-full md:w-44 bg-gradient-to-br from-primary/20 to-secondary flex flex-col items-center justify-center p-6 gap-3 border-r border-border">
+                        <div className="w-full md:w-44 bg-gradient-to-br from-amber-500/20 via-amber-500/10 to-transparent flex flex-col items-center justify-center p-6 gap-3 border-r border-white/20 dark:border-amber-500/20">
                           <div className="w-20 h-20 bg-white rounded-xl p-2 shadow-lg group-hover:scale-105 transition-transform overflow-hidden">
                             {next.qrCode ? (
                               <img src={next.qrCode} alt="Ticket QR Code" className="w-full h-full object-contain mix-blend-multiply" />
@@ -306,9 +306,9 @@ export default function StudentDashboard() {
                           }}
                           exit={{ scale: 0.8, opacity: 0 }}
                           transition={{ duration: 0.3 }}
-                          className="absolute w-full max-w-sm h-80 bg-card border border-border shadow-2xl rounded-3xl overflow-hidden cursor-grab active:cursor-grabbing flex flex-col"
+                          className="absolute w-full max-w-sm h-80 bg-white/50 dark:bg-black/40 backdrop-blur-2xl border border-white/30 dark:border-amber-500/25 shadow-2xl rounded-3xl overflow-hidden cursor-grab active:cursor-grabbing flex flex-col"
                         >
-                          <div className="h-32 bg-gradient-to-br from-primary/30 to-secondary relative flex items-center justify-center">
+                          <div className="h-32 bg-gradient-to-br from-amber-500/30 to-amber-500/10 relative flex items-center justify-center">
                             <span className="text-5xl">{evt.category?.icon || '🎫'}</span>
                             
                             {/* FOMO Meter */}
@@ -363,10 +363,10 @@ export default function StudentDashboard() {
           <div className="space-y-6">
             
             {/* AI Skill Profile (Radar Chart) */}
-            <Card className="bg-card border-border overflow-hidden">
-              <CardHeader className="pb-2 border-b border-border bg-secondary/30">
-                <CardTitle className="text-base flex items-center gap-2 text-foreground">
-                  <BrainCircuit className="w-4 h-4 text-primary" /> Campus Profile
+            <Card className="rounded-3xl overflow-hidden hover:border-amber-400/40">
+              <CardHeader className="pb-2 border-b border-white/20 dark:border-amber-500/20 bg-amber-500/10">
+                <CardTitle className="text-base flex items-center gap-2 text-foreground font-bold">
+                  <BrainCircuit className="w-4 h-4 text-amber-500" /> Campus Profile
                 </CardTitle>
                 <CardDescription className="text-xs">Based on your event attendance</CardDescription>
               </CardHeader>
@@ -377,17 +377,17 @@ export default function StudentDashboard() {
                       <PolarGrid stroke="currentColor" className="text-border" />
                       <PolarAngleAxis dataKey="subject" tick={{ fill: 'currentColor', fontSize: 10, fontWeight: 600 }} className="text-muted-foreground" />
                       <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
-                      <Tooltip contentStyle={{ backgroundColor: 'hsl(var(--card))', borderColor: 'hsl(var(--border))', borderRadius: '8px' }} />
-                      <Radar name="Student" dataKey="A" stroke="hsl(var(--primary))" fill="hsl(var(--primary))" fillOpacity={0.4} />
+                      <Tooltip contentStyle={{ backgroundColor: 'hsl(var(--card))', borderColor: 'hsl(var(--border))', borderRadius: '16px' }} />
+                      <Radar name="Student" dataKey="A" stroke="#f59e0b" fill="#f59e0b" fillOpacity={0.4} />
                     </RadarChart>
                   </ResponsiveContainer>
                 </div>
-                <div className="w-full bg-secondary/50 rounded-xl p-3 mt-2 border border-border flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
-                    <TrendingUp className="w-5 h-5 text-primary" />
+                <div className="w-full bg-white/40 dark:bg-black/30 rounded-2xl p-3 mt-2 border border-white/20 dark:border-amber-500/20 flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center shrink-0">
+                    <TrendingUp className="w-5 h-5 text-amber-500" />
                   </div>
                   <div>
-                    <p className="text-xs text-muted-foreground">Next Milestone</p>
+                    <p className="text-xs text-muted-foreground font-semibold">Next Milestone</p>
                     <p className="text-sm font-bold text-foreground">Attend 2 Arts events to unlock 'Creative' badge!</p>
                   </div>
                 </div>
@@ -395,19 +395,19 @@ export default function StudentDashboard() {
             </Card>
 
             {/* Notifications */}
-            <Card className="bg-card border-border">
-              <CardHeader className="pb-3 border-b border-border bg-secondary/30">
-                <CardTitle className="text-base flex items-center gap-2 text-foreground">
-                  <Bell className="w-4 h-4 text-primary" /> Notifications
+            <Card className="rounded-3xl hover:border-amber-400/40">
+              <CardHeader className="pb-3 border-b border-white/20 dark:border-amber-500/20 bg-amber-500/10">
+                <CardTitle className="text-base flex items-center gap-2 text-foreground font-bold">
+                  <Bell className="w-4 h-4 text-amber-500" /> Notifications
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-0">
                 {registrations.length === 0 ? (
-                  <div className="p-6 text-center text-muted-foreground text-sm">No notifications yet</div>
+                  <div className="p-6 text-center text-muted-foreground text-sm font-medium">No notifications yet</div>
                 ) : (
-                  <div className="divide-y divide-border">
+                  <div className="divide-y divide-white/10 dark:divide-amber-500/10">
                     {upcoming.slice(0, 3).map((r) => (
-                      <div key={r.id} className="p-4 hover:bg-secondary/50 transition-colors">
+                      <div key={r.id} className="p-4 hover:bg-white/20 dark:hover:bg-amber-500/5 transition-colors">
                         <p className="text-sm font-bold text-foreground">Reminder: {r.event.title}</p>
                         <p className="text-xs text-muted-foreground mt-1 font-medium">
                           {formatDistanceToNow(new Date(r.event.date), { addSuffix: true })}
@@ -421,25 +421,25 @@ export default function StudentDashboard() {
 
             {/* Quick Certificate Preview */}
             {certificates.length > 0 && (
-              <Card className="bg-card border-border">
-                <CardHeader className="pb-3 border-b border-border bg-secondary/30">
+              <Card className="rounded-3xl hover:border-amber-400/40">
+                <CardHeader className="pb-3 border-b border-white/20 dark:border-amber-500/20 bg-amber-500/10">
                   <div className="flex items-center justify-between">
-                    <CardTitle className="text-base flex items-center gap-2 text-foreground">
-                      <Award className="w-4 h-4 text-yellow-500" /> Latest Certificate
+                    <CardTitle className="text-base flex items-center gap-2 text-foreground font-bold">
+                      <Award className="w-4 h-4 text-amber-400" /> Latest Certificate
                     </CardTitle>
-                    <button onClick={() => setActiveSection('certificates')} className="text-xs font-bold text-primary hover:underline">View All</button>
+                    <button onClick={() => setActiveSection('certificates')} className="text-xs font-bold text-amber-500 hover:underline">View All</button>
                   </div>
                 </CardHeader>
                 <CardContent className="p-4">
-                  <div className="p-4 rounded-xl bg-gradient-to-br from-primary/10 to-transparent border border-primary/20">
-                    <Award className="w-8 h-8 text-primary mb-3" />
+                  <div className="p-4 rounded-2xl bg-white/40 dark:bg-black/30 border border-white/20 dark:border-amber-500/20">
+                    <Award className="w-8 h-8 text-amber-500 mb-3" />
                     <h4 className="font-bold text-sm mb-1 text-foreground">{certificates[0].event.title}</h4>
                     <p className="text-xs text-muted-foreground mb-3 font-medium">Issued {format(new Date(certificates[0].issuedAt), 'MMM d, yyyy')}</p>
                     <div className="flex gap-2">
-                      <Button size="sm" className="h-8 text-xs flex-1 bg-primary/20 hover:bg-primary/30 text-primary font-bold shadow-none">
+                      <Button size="sm" className="h-8 text-xs flex-1 bg-primary/20 hover:bg-primary/30 text-amber-500 font-bold rounded-xl shadow-none">
                         <Download className="w-3 h-3 mr-1" /> Download
                       </Button>
-                      <Button size="sm" variant="ghost" className="h-8 w-8 p-0 border border-border">
+                      <Button size="sm" variant="ghost" className="h-8 w-8 p-0 rounded-xl border border-white/20 dark:border-amber-500/20">
                         <Share2 className="w-3 h-3" />
                       </Button>
                     </div>
@@ -658,49 +658,49 @@ export default function StudentDashboard() {
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-foreground">Discover Events</h2>
             <div className="flex gap-2">
-              <Button variant="outline" size="sm" className="border-border bg-card font-bold">
-                <Filter className="w-3.5 h-3.5 mr-2" /> Filter
+              <Button variant="outline" size="sm" className="rounded-xl border-white/30 dark:border-amber-500/25 bg-white/40 dark:bg-black/30 font-bold hover:bg-amber-500/10">
+                <Filter className="w-3.5 h-3.5 mr-2 text-amber-500" /> Filter
               </Button>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
             {(discoverEvents?.events || discoverEvents || []).map((evt: any) => (
               <Link key={evt.id} href={`/events/${evt.id}`}>
-                <div className="rounded-2xl bg-card border border-border hover:border-primary/50 transition-all hover:-translate-y-1 shadow-lg overflow-hidden group flex flex-col h-full">
-                  <div className="h-36 bg-gradient-to-br from-primary/20 to-secondary relative flex items-center justify-center text-5xl">
+                <div className="rounded-3xl bg-white/40 dark:bg-black/30 backdrop-blur-2xl border border-white/30 dark:border-amber-500/20 hover:border-amber-400/50 transition-all hover:-translate-y-1.5 shadow-xl shadow-amber-500/5 overflow-hidden group flex flex-col h-full">
+                  <div className="h-36 bg-gradient-to-br from-amber-500/20 via-amber-500/10 to-transparent relative flex items-center justify-center text-5xl">
                     {evt.category?.icon || '🎯'}
                     
                     {/* FOMO Meter Tag */}
                     {evt.registeredCount / evt.capacity > 0.8 ? (
-                      <div className="absolute top-3 right-3 bg-red-500 px-2 py-1 rounded shadow-[0_0_15px_rgba(239,68,68,0.5)] text-xs font-bold text-white animate-pulse">
+                      <div className="absolute top-3 right-3 bg-red-500 px-2.5 py-1 rounded-full shadow-[0_0_15px_rgba(239,68,68,0.5)] text-xs font-bold text-white animate-pulse">
                         🔥 Trending
                       </div>
                     ) : (
-                      <div className="absolute top-3 right-3 bg-background/90 backdrop-blur-md px-2 py-1 rounded text-xs font-bold text-foreground border border-border">
+                      <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-bold text-white border border-white/20">
                         {evt.registeredCount ?? 0}/{evt.capacity}
                       </div>
                     )}
                   </div>
                   <div className="p-5 flex flex-col flex-1">
-                    <Badge variant="outline" className="border-primary/30 text-primary text-xs font-bold w-max mb-2">{evt.category?.name || 'Event'}</Badge>
-                    <h3 className="font-bold text-foreground group-hover:text-primary transition-colors mb-2 line-clamp-1">{evt.title}</h3>
+                    <Badge variant="outline" className="border-amber-500/30 text-amber-500 text-xs font-bold w-max mb-2 rounded-full px-2.5">{evt.category?.name || 'Event'}</Badge>
+                    <h3 className="font-bold text-foreground group-hover:text-amber-500 transition-colors mb-2 line-clamp-1">{evt.title}</h3>
                     
                     {/* FOMO Progress Bar */}
                     <div className="space-y-1 mb-3">
-                      <div className="h-1.5 w-full bg-secondary rounded-full overflow-hidden">
+                      <div className="h-1.5 w-full bg-white/20 dark:bg-black/40 rounded-full overflow-hidden">
                         <div 
-                          className="h-full bg-gradient-to-r from-orange-400 to-red-500"
+                          className="h-full bg-gradient-to-r from-amber-400 to-yellow-500"
                           style={{ width: `${(evt.registeredCount / evt.capacity * 100)}%` }}
                         />
                       </div>
                     </div>
 
                     <div className="text-xs text-muted-foreground space-y-1.5 mb-4 font-medium flex-1">
-                      <div className="flex items-center gap-1.5"><CalendarDays className="w-3.5 h-3.5" /> {evt.date ? format(new Date(evt.date), 'MMM d, yyyy') : ''}</div>
-                      <div className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> {evt.location}</div>
+                      <div className="flex items-center gap-1.5"><CalendarDays className="w-3.5 h-3.5 text-amber-500" /> {evt.date ? format(new Date(evt.date), 'MMM d, yyyy') : ''}</div>
+                      <div className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-amber-500" /> {evt.location}</div>
                     </div>
                     
-                    <Button size="sm" className="w-full h-9 text-xs font-bold bg-primary/10 hover:bg-primary hover:text-primary-foreground text-primary transition-colors shadow-none mt-auto">
+                    <Button size="sm" className="w-full h-10 text-xs font-bold rounded-2xl bg-amber-500/15 hover:bg-amber-500 hover:text-black text-amber-500 transition-all shadow-none mt-auto">
                       Register Now
                     </Button>
                   </div>
