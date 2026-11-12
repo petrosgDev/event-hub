@@ -12,7 +12,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Loader2, ArrowRight, ArrowLeft, Eye, EyeOff } from 'lucide-react';
 
 const registerSchema = z.object({
@@ -125,135 +124,147 @@ export default function RegisterPage() {
   };
 
   return (
-    <Card className="border-none shadow-none bg-transparent">
-      <CardHeader className="px-0 pt-0 text-center">
-        <CardTitle className="text-3xl font-extrabold tracking-tight text-foreground">Create Account</CardTitle>
-        <CardDescription className="text-muted-foreground text-sm mt-1">
+    <div className="w-full">
+      {/* Back to landing page button right inside the box header */}
+      <div className="mb-6 flex items-center justify-between">
+        <Link 
+          href="/" 
+          className="inline-flex items-center gap-2 text-xs font-bold text-muted-foreground hover:text-amber-400 px-3 py-1.5 rounded-full bg-white/20 dark:bg-white/5 border border-white/20 dark:border-amber-500/20 hover:border-amber-500/40 backdrop-blur-md transition-all group"
+        >
+          <ArrowLeft className="w-3.5 h-3.5 text-amber-500 group-hover:-translate-x-1 transition-transform" />
+          <span>Back to Landing Page</span>
+        </Link>
+        <span className="text-xs text-amber-500 font-extrabold tracking-wider uppercase">Step {step} of 2</span>
+      </div>
+
+      <div className="text-center mb-6">
+        <h1 className="text-3xl font-extrabold tracking-tight text-foreground">Create Account</h1>
+        <p className="text-muted-foreground text-sm mt-1">
           Join EventHub to discover amazing events at Debre Birhan University
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="px-0">
-        <div className="flex gap-2 mb-8">
-          <div className={`h-1.5 flex-1 rounded-full transition-all ${step >= 1 ? 'bg-amber-500 shadow-sm shadow-amber-500/50' : 'bg-white/20'}`} />
-          <div className={`h-1.5 flex-1 rounded-full transition-all ${step >= 2 ? 'bg-amber-500 shadow-sm shadow-amber-500/50' : 'bg-white/20'}`} />
-        </div>
+        </p>
+      </div>
 
-        <form onSubmit={onSubmit} className="relative min-h-[280px]">
-          <AnimatePresence mode="wait">
-            {step === 1 && (
-              <motion.div
-                key="step1"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ duration: 0.2 }}
-                className="space-y-4"
-              >
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="firstName" className="text-muted-foreground text-sm font-semibold">First name</Label>
-                    <Input
-                      id="firstName" name="firstName"
-                      placeholder="Abebe"
-                      value={formData.firstName} onChange={handleChange}
-                      className={`bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40 ${errors.firstName ? 'border-destructive' : ''}`}
-                    />
-                    {errors.firstName && <p className="text-xs text-destructive">{errors.firstName}</p>}
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="lastName" className="text-muted-foreground text-sm font-semibold">Last name</Label>
-                    <Input
-                      id="lastName" name="lastName"
-                      placeholder="Kebede"
-                      value={formData.lastName} onChange={handleChange}
-                      className={`bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40 ${errors.lastName ? 'border-destructive' : ''}`}
-                    />
-                    {errors.lastName && <p className="text-xs text-destructive">{errors.lastName}</p>}
-                  </div>
-                </div>
-                <Button type="button" onClick={nextStep} className="w-full h-12 text-base font-bold rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground btn-3d-golden mt-6">
-                  Continue <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
-              </motion.div>
-            )}
+      <div className="flex gap-2 mb-8">
+        <div className={`h-1.5 flex-1 rounded-full transition-all ${step >= 1 ? 'bg-amber-500 shadow-sm shadow-amber-500/50' : 'bg-white/20'}`} />
+        <div className={`h-1.5 flex-1 rounded-full transition-all ${step >= 2 ? 'bg-amber-500 shadow-sm shadow-amber-500/50' : 'bg-white/20'}`} />
+      </div>
 
-            {step === 2 && (
-              <motion.div
-                key="step2"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ duration: 0.2 }}
-                className="space-y-4"
-              >
+      <form onSubmit={onSubmit} className="relative min-h-[280px]">
+        <AnimatePresence mode="wait">
+          {step === 1 && (
+            <motion.div
+              key="step1"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.2 }}
+              className="space-y-4"
+            >
+              <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-muted-foreground text-sm font-semibold">University Email</Label>
+                  <Label htmlFor="firstName" className="text-muted-foreground text-sm font-semibold">First name</Label>
                   <Input
-                    id="email" name="email" type="email"
-                    placeholder="student@dbu.edu.et"
-                    value={formData.email} onChange={handleChange}
-                    className={`bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40 ${errors.email ? 'border-destructive' : ''}`}
+                    id="firstName" name="firstName"
+                    placeholder="Abebe"
+                    value={formData.firstName} onChange={handleChange}
+                    className={`bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40 ${errors.firstName ? 'border-destructive' : ''}`}
                   />
-                  {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
+                  {errors.firstName && <p className="text-xs text-destructive">{errors.firstName}</p>}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="password" className="text-muted-foreground text-sm font-semibold">Password</Label>
-                  <div className="relative">
-                    <Input
-                      id="password" name="password" type={showPassword ? "text" : "password"}
-                      value={formData.password} onChange={handleChange}
-                      placeholder="••••••••"
-                      className={`bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base pr-11 text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40 ${errors.password ? 'border-destructive' : ''}`}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-amber-500 transition-colors"
-                    >
-                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                    </button>
-                  </div>
-                  {errors.password && <p className="text-xs text-destructive">{errors.password}</p>}
+                  <Label htmlFor="lastName" className="text-muted-foreground text-sm font-semibold">Last name</Label>
+                  <Input
+                    id="lastName" name="lastName"
+                    placeholder="Kebede"
+                    value={formData.lastName} onChange={handleChange}
+                    className={`bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40 ${errors.lastName ? 'border-destructive' : ''}`}
+                  />
+                  {errors.lastName && <p className="text-xs text-destructive">{errors.lastName}</p>}
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="confirmPassword" className="text-muted-foreground text-sm font-semibold">Confirm Password</Label>
-                  <div className="relative">
-                    <Input
-                      id="confirmPassword" name="confirmPassword" type={showConfirmPassword ? "text" : "password"}
-                      value={formData.confirmPassword} onChange={handleChange}
-                      placeholder="••••••••"
-                      className={`bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base pr-11 text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40 ${errors.confirmPassword ? 'border-destructive' : ''}`}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-amber-500 transition-colors"
-                    >
-                      {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                    </button>
-                  </div>
-                  {errors.confirmPassword && <p className="text-xs text-destructive">{errors.confirmPassword}</p>}
+              </div>
+              <Button type="button" onClick={nextStep} className="w-full h-12 text-base font-bold rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground btn-3d-golden mt-6">
+                Continue <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </motion.div>
+          )}
+
+          {step === 2 && (
+            <motion.div
+              key="step2"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.2 }}
+              className="space-y-4"
+            >
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-muted-foreground text-sm font-semibold">University Email</Label>
+                <Input
+                  id="email" name="email" type="email"
+                  placeholder="student@dbu.edu.et"
+                  value={formData.email} onChange={handleChange}
+                  className={`bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40 ${errors.email ? 'border-destructive' : ''}`}
+                />
+                {errors.email && <p className="text-xs text-destructive">{errors.email}</p>}
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="password" className="text-muted-foreground text-sm font-semibold">Password</Label>
+                <div className="relative">
+                  <Input
+                    id="password" name="password" type={showPassword ? "text" : "password"}
+                    value={formData.password} onChange={handleChange}
+                    placeholder="••••••••"
+                    className={`bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base pr-11 text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40 ${errors.password ? 'border-destructive' : ''}`}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-amber-500 transition-colors"
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
                 </div>
-                <div className="flex gap-3 pt-2">
-                  <Button type="button" variant="outline" onClick={() => setStep(1)} className="px-4 rounded-2xl bg-white/40 dark:bg-black/30 border-white/30 dark:border-amber-500/20 hover:bg-amber-500/10">
-                    <ArrowLeft className="w-4 h-4" />
-                  </Button>
-                  <Button type="submit" className="flex-1 h-12 text-base font-bold rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground btn-3d-golden" disabled={isLoading}>
-                    {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    {isLoading ? 'Creating account...' : 'Create Account'}
-                  </Button>
+                {errors.password && <p className="text-xs text-destructive">{errors.password}</p>}
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword" className="text-muted-foreground text-sm font-semibold">Confirm Password</Label>
+                <div className="relative">
+                  <Input
+                    id="confirmPassword" name="confirmPassword" type={showConfirmPassword ? "text" : "password"}
+                    value={formData.confirmPassword} onChange={handleChange}
+                    placeholder="••••••••"
+                    className={`bg-white/50 dark:bg-black/30 border-white/30 dark:border-amber-500/20 rounded-2xl h-12 text-base pr-11 text-foreground placeholder:text-muted-foreground focus-visible:ring-amber-500/40 ${errors.confirmPassword ? 'border-destructive' : ''}`}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-amber-500 transition-colors"
+                  >
+                    {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
                 </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </form>
-      </CardContent>
-      <CardFooter className="px-0 justify-center text-sm text-muted-foreground mt-4">
+                {errors.confirmPassword && <p className="text-xs text-destructive">{errors.confirmPassword}</p>}
+              </div>
+              <div className="flex gap-3 pt-2">
+                <Button type="button" variant="outline" onClick={() => setStep(1)} className="px-4 rounded-2xl bg-white/40 dark:bg-black/30 border-white/30 dark:border-amber-500/20 hover:bg-amber-500/10">
+                  <ArrowLeft className="w-4 h-4" />
+                </Button>
+                <Button type="submit" className="flex-1 h-12 text-base font-bold rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground btn-3d-golden" disabled={isLoading}>
+                  {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  {isLoading ? 'Creating account...' : 'Create Account'}
+                </Button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </form>
+
+      <div className="text-center text-sm text-muted-foreground mt-6">
         Already have an account?{' '}
         <Link href="/login" className="ml-1 text-amber-500 hover:underline font-bold">
           Sign In
         </Link>
-      </CardFooter>
-    </Card>
+      </div>
+    </div>
   );
 }
