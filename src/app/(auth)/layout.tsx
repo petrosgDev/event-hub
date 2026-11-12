@@ -6,11 +6,11 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-background">
+    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-transparent">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay z-0"></div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 blur-[120px] rounded-full pointer-events-none z-0" />
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-orange-500/10 blur-[100px] rounded-full pointer-events-none z-0" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/15 blur-[140px] rounded-full pointer-events-none z-0" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-500/15 blur-[120px] rounded-full pointer-events-none z-0" />
       
       {/* Top Left Logo */}
       <Link href="/" className="absolute top-8 left-8 z-20 flex items-center gap-2 hover:opacity-80 transition-opacity">
@@ -22,9 +22,9 @@ export default function AuthLayout({
 
       {/* Centered Form Container */}
       <div className="relative z-10 w-full max-w-lg p-6">
-        <div className="bg-black/40 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-2xl p-8 md:p-10 overflow-hidden relative">
-          {/* Inner card glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[200px] h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
+        <div className="bg-white/75 dark:bg-black/45 backdrop-blur-3xl border border-white/40 dark:border-white/12 rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.6)] p-8 md:p-10 overflow-hidden relative">
+          {/* Inner card specular rim highlight */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-70" />
           
           {children}
         </div>

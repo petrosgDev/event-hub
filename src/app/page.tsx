@@ -61,7 +61,7 @@ export default function LandingPage() {
   const { t } = useTranslation();
 
   return (
-    <div className="min-h-screen bg-background flex flex-col font-sans">
+    <div className="min-h-screen bg-transparent flex flex-col font-sans">
       <Navbar />
 
       <main className="flex-1">
@@ -123,7 +123,7 @@ export default function LandingPage() {
                 </Link>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto border-t border-white/10 pt-10">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto p-6 md:p-8 rounded-3xl bg-white/70 dark:bg-white/[0.05] backdrop-blur-2xl border border-white/40 dark:border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.08)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.4)] mt-4">
                 {[
                   { label: t('students'), value: stats?.students || '0+', icon: Users },
                   { label: t('eventsHosted'), value: stats?.events || '0+', icon: CalendarDays },
@@ -163,7 +163,7 @@ export default function LandingPage() {
         </section>
 
         {/* ═══════════════ LIVE EVENTS FEED ═══════════════ */}
-        <section className="py-20 bg-background">
+        <section className="py-20 relative bg-transparent">
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-4">
               <div>
@@ -254,47 +254,49 @@ export default function LandingPage() {
         </section>
 
         {/* ═══════════════ CAMPUS MAP ═══════════════ */}
-        <section className="py-20 bg-secondary/30 border-y border-border">
+        <section className="py-20 relative bg-transparent">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-              <div>
-                <Badge className="bg-primary/10 text-primary border-primary/30 mb-4">{t('campusMap')}</Badge>
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('findEventsOnCampus')}</h2>
-                <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
-                  {t('campusMapDesc')}
-                </p>
-                <div className="space-y-3 mb-6">
-                  {[
-                    t('campusLoc1'),
-                    t('campusLoc2'), 
-                    t('campusLoc3'),
-                    t('campusLoc4')
-                  ].map((loc, i) => (
-                    <div key={i} className="flex items-center gap-3 text-sm">
-                      <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
-                      <span className="text-foreground/80">{loc}</span>
-                    </div>
-                  ))}
+            <div className="p-8 md:p-12 rounded-3xl bg-white/60 dark:bg-white/[0.04] backdrop-blur-2xl border border-white/30 dark:border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.06)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                <div>
+                  <Badge className="bg-primary/10 text-primary border-primary/30 mb-4">{t('campusMap')}</Badge>
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('findEventsOnCampus')}</h2>
+                  <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
+                    {t('campusMapDesc')}
+                  </p>
+                  <div className="space-y-3 mb-6">
+                    {[
+                      t('campusLoc1'),
+                      t('campusLoc2'), 
+                      t('campusLoc3'),
+                      t('campusLoc4')
+                    ].map((loc, i) => (
+                      <div key={i} className="flex items-center gap-3 text-sm">
+                        <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
+                        <span className="text-foreground/80">{loc}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <Link href="/events/discover">
+                    <Button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-2xl h-11 px-6 shadow-md">
+                      <MapPin className="w-4 h-4 mr-2" /> {t('browseEventsNearYou')}
+                    </Button>
+                  </Link>
                 </div>
-                <Link href="/events/discover">
-                  <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
-                    <MapPin className="w-4 h-4 mr-2" /> {t('browseEventsNearYou')}
-                  </Button>
-                </Link>
-              </div>
-              <div className="rounded-2xl overflow-hidden border border-border shadow-2xl h-[400px]">
-                <iframe 
-                  width="100%" height="100%" frameBorder="0" scrolling="no"
-                  src="https://maps.google.com/maps?q=Debre+Birhan+University&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                  className="grayscale-[0.3] contrast-110"
-                ></iframe>
+                <div className="rounded-3xl overflow-hidden border border-white/30 dark:border-white/15 shadow-2xl h-[400px]">
+                  <iframe 
+                    width="100%" height="100%" frameBorder="0" scrolling="no"
+                    src="https://maps.google.com/maps?q=Debre+Birhan+University&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                    className="grayscale-[0.3] contrast-110"
+                  ></iframe>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         {/* ═══════════════ FEATURES ═══════════════ */}
-        <section className="py-20 bg-background">
+        <section className="py-20 relative bg-transparent">
           <div className="container mx-auto px-4">
             <div className="text-center max-w-3xl mx-auto mb-14">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('featuresTitle')}</h2>
@@ -323,7 +325,7 @@ export default function LandingPage() {
         </section>
 
         {/* ═══════════════ HOW IT WORKS ═══════════════ */}
-        <section className="py-20 bg-secondary/30 border-y border-border relative overflow-hidden">
+        <section className="py-20 relative overflow-hidden bg-transparent">
           <div className="absolute left-0 top-1/2 w-80 h-80 bg-primary/10 rounded-full blur-[100px] -translate-y-1/2 -translate-x-1/2"></div>
           <div className="container mx-auto px-4 relative z-10">
             <div className="text-center max-w-3xl mx-auto mb-16">
@@ -340,7 +342,7 @@ export default function LandingPage() {
                 { step: '4', title: t('step4Title'), desc: t('step4Desc'), icon: Trophy },
               ].map((item, i) => (
                 <div key={i} className="relative flex flex-col items-center text-center group">
-                  <div className="w-28 h-28 rounded-full bg-background border-2 border-primary/30 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(255,215,0,0.08)] group-hover:scale-110 group-hover:border-primary/60 transition-all relative z-10">
+                  <div className="w-28 h-28 rounded-3xl bg-white/70 dark:bg-white/[0.06] backdrop-blur-xl border border-primary/40 flex items-center justify-center mb-6 shadow-[0_8px_25px_rgba(255,215,0,0.12)] group-hover:scale-105 group-hover:border-primary transition-all relative z-10">
                     <item.icon className="w-10 h-10 text-primary" />
                   </div>
                   <h3 className="text-lg font-bold mb-2">{item.title}</h3>
@@ -352,7 +354,7 @@ export default function LandingPage() {
         </section>
 
         {/* ═══════════════ TESTIMONIALS ═══════════════ */}
-        <section className="py-20 bg-background">
+        <section className="py-20 relative bg-transparent">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">{t('whatStudentsSay')}</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
@@ -361,8 +363,8 @@ export default function LandingPage() {
                 { name: 'Sara Mohammed', dept: 'Business Admin', quote: t('testimonial2'), rating: 5 },
                 { name: 'Daniel Bekele', dept: 'Engineering', quote: t('testimonial3'), rating: 4 },
               ].map((t, i) => (
-                <Card key={i} className="bg-card border-border hover:border-primary/30 transition-colors shadow-sm">
-                  <CardContent className="p-6">
+                <Card key={i} className="rounded-3xl p-6 bg-white/70 dark:bg-card/45 backdrop-blur-2xl border border-white/30 dark:border-white/10 hover:border-primary/40 transition-all shadow-md">
+                  <CardContent className="p-0">
                     <div className="flex gap-0.5 mb-4">
                       {[...Array(5)].map((_, idx) => (
                         <Star key={idx} className={`w-4 h-4 ${idx < t.rating ? 'fill-yellow-400 text-yellow-400' : 'text-white/20'}`} />
@@ -386,33 +388,38 @@ export default function LandingPage() {
         </section>
 
         {/* ═══════════════ CTA ═══════════════ */}
-        <section className="py-28 relative overflow-hidden">
-          <div className="absolute inset-0 bg-primary/5"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/15 rounded-full blur-[120px]"></div>
-          <div className="container mx-auto px-4 text-center relative z-10">
-            <GraduationCap className="w-14 h-14 text-primary mx-auto mb-6" />
-            <h2 className="text-4xl md:text-5xl font-black mb-6">{t('ctaTitle')}</h2>
-            <p className="text-lg text-muted-foreground mb-10 max-w-xl mx-auto">
-              {t('ctaDescription')}
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/register">
-                <Button size="lg" className="h-14 px-10 text-lg rounded-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-[0_0_30px_rgba(255,215,0,0.25)]">
-                  {t('ctaButton')}
-                </Button>
-              </Link>
-              <Link href="/login">
-                <Button size="lg" variant="outline" className="h-14 px-10 text-lg rounded-full border-white/20 hover:bg-white/10 bg-black/50 backdrop-blur-md">
-                  {t('signIn')}
-                </Button>
-              </Link>
+        <section className="py-24 relative overflow-hidden bg-transparent">
+          <div className="container mx-auto px-4 max-w-5xl relative z-10">
+            <div className="relative p-10 md:p-16 rounded-3xl bg-gradient-to-b from-white/80 to-white/50 dark:from-white/[0.08] dark:to-white/[0.02] backdrop-blur-2xl border border-white/40 dark:border-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.1)] dark:shadow-[0_25px_60px_rgba(0,0,0,0.5)] text-center overflow-hidden">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/15 rounded-full blur-[120px] pointer-events-none" />
+              
+              <div className="relative z-10">
+                <GraduationCap className="w-14 h-14 text-primary mx-auto mb-6" />
+                <h2 className="text-4xl md:text-5xl font-black mb-6">{t('ctaTitle')}</h2>
+                <p className="text-lg text-muted-foreground mb-10 max-w-xl mx-auto">
+                  {t('ctaDescription')}
+                </p>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                  <Link href="/register">
+                    <Button size="lg" className="h-14 px-10 text-lg rounded-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-[0_0_30px_rgba(255,215,0,0.25)]">
+                      {t('ctaButton')}
+                    </Button>
+                  </Link>
+                  <Link href="/login">
+                    <Button size="lg" variant="outline" className="h-14 px-10 text-lg rounded-full border-white/30 hover:bg-white/10 backdrop-blur-md">
+                      {t('signIn')}
+                    </Button>
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </section>
       </main>
 
       {/* ═══════════════ FOOTER ═══════════════ */}
-      <footer className="bg-card py-14 border-t border-border">
+      <footer className="bg-white/60 dark:bg-black/40 backdrop-blur-2xl py-14 border-t border-white/20 dark:border-white/10">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
             <div className="md:col-span-1">

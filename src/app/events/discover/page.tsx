@@ -51,7 +51,7 @@ function DiscoverEventsContent() {
   });
 
   return (
-    <div className="min-h-screen bg-background pt-24 pb-12 px-4 md:px-6">
+    <div className="min-h-screen bg-transparent pt-24 pb-12 px-4 md:px-6">
       <div className="container mx-auto max-w-7xl">
         {/* Header */}
         <div className="mb-10">
