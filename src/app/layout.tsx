@@ -21,6 +21,9 @@ export default function RootLayout({
       <body className="min-h-screen bg-background font-sans antialiased relative selection:bg-amber-500/20 selection:text-amber-400">
         {/* Ambient Glassmorphic Golden Glow Orbs (Pure University Golden Light) */}
         <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 select-none">
+          {/* 3D Perspective Grid Horizon */}
+          <div className="perspective-grid" />
+          
           {/* Top-center golden ambient burst */}
           <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[550px] rounded-full bg-gradient-to-b from-amber-400/20 via-yellow-500/12 to-transparent blur-[140px] opacity-80 animate-float" />
           {/* Right golden/amber orb */}

@@ -171,7 +171,7 @@ export default function RegisterPage() {
                     {errors.lastName && <p className="text-xs text-destructive">{errors.lastName}</p>}
                   </div>
                 </div>
-                <Button type="button" onClick={nextStep} className="w-full h-12 text-base font-bold rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-amber-500/25 mt-6">
+                <Button type="button" onClick={nextStep} className="w-full h-12 text-base font-bold rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground btn-3d-golden mt-6">
                   Continue <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </motion.div>
@@ -238,7 +238,7 @@ export default function RegisterPage() {
                   <Button type="button" variant="outline" onClick={() => setStep(1)} className="px-4 rounded-2xl bg-white/40 dark:bg-black/30 border-white/30 dark:border-amber-500/20 hover:bg-amber-500/10">
                     <ArrowLeft className="w-4 h-4" />
                   </Button>
-                  <Button type="submit" className="flex-1 h-12 text-base font-bold rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-amber-500/25" disabled={isLoading}>
+                  <Button type="submit" className="flex-1 h-12 text-base font-bold rounded-2xl bg-primary hover:bg-primary/90 text-primary-foreground btn-3d-golden" disabled={isLoading}>
                     {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                     {isLoading ? 'Creating account...' : 'Create Account'}
                   </Button>

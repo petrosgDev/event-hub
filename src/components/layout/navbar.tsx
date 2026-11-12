@@ -27,8 +27,8 @@ export function Navbar() {
   }, []);
 
   return (
-    <header className="sticky top-3 md:top-4 z-50 w-full px-3 md:px-6 transition-all duration-300">
-      <div className="max-w-7xl mx-auto rounded-2xl md:rounded-3xl border border-white/30 dark:border-amber-500/25 bg-background/50 dark:bg-black/35 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.25)] shadow-amber-500/10 px-4 md:px-6 h-16 flex items-center justify-between gap-4">
+    <header className="sticky top-3 md:top-4 z-50 w-full px-3 md:px-6 transition-all duration-300 perspective-1000">
+      <div className="max-w-7xl mx-auto rounded-2xl md:rounded-3xl border-t border-t-white/60 dark:border-t-amber-400/40 border-b-2 border-b-amber-500/30 dark:border-b-amber-600/50 border-x border-x-white/30 dark:border-x-amber-500/20 bg-white/45 dark:bg-black/35 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15),0_8px_20px_rgba(245,158,11,0.12)] dark:shadow-[0_25px_60px_rgba(0,0,0,0.7),0_10px_30px_rgba(245,158,11,0.2)] px-4 md:px-6 h-16 flex items-center justify-between gap-4 transition-all duration-300">
         
         {/* Left Side: Logo & Search Bar */}
         <div className="flex items-center gap-6 flex-1">

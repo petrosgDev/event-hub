@@ -16,6 +16,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { Navbar } from '@/components/layout/navbar';
+import { Card3D, Card3DItem } from '@/components/ui/card-3d';
 import { Calendar, MapPin, Clock, Users, Link as LinkIcon, Share2, Bookmark, ArrowLeft, Building, Tag, Loader2, X, Plus, Minus, Ticket } from 'lucide-react';
 
 // Slide-out modal component for tickets
@@ -411,96 +412,102 @@ export default function EventDetailPage() {
               )}
             </div>
 
-            {/* Sidebar / Registration Card (Rounded-3xl Glass) */}
+            {/* Sidebar / Registration Card (Rounded-3xl Glass with 3D Tilt) */}
             <div className="lg:col-span-1">
               <div className="sticky top-24">
-                <Card className="rounded-3xl shadow-2xl overflow-hidden border border-white/30 dark:border-amber-500/25 bg-white/40 dark:bg-black/35 backdrop-blur-2xl">
-                  <div className="h-2 w-full bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500" />
-                  <CardContent className="p-7">
-                    <div className="flex justify-between items-center mb-6">
-                      <h3 className="text-xl font-bold text-foreground">Registration</h3>
-                      <div className="flex items-center gap-2">
-                        <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full hover:bg-amber-500/10 text-amber-500">
-                          <Share2 className="w-4 h-4" />
-                        </Button>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full hover:bg-amber-500/10">
-                          <Bookmark className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-between items-center py-2 border-b border-white/15 dark:border-amber-500/15 mb-4">
-                      <span className="text-muted-foreground font-medium">Price</span>
-                      <span className="font-extrabold text-2xl text-amber-500">{event.isFree ? 'Free' : `${event.price} ETB`}</span>
-                    </div>
-
-                    <div className="space-y-4 mb-8">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-amber-500/15 border border-amber-500/25 flex items-center justify-center shrink-0">
-                          <Users className="w-5 h-5 text-amber-500" />
-                        </div>
-                        <div>
-                          <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">Capacity</p>
-                          <p className="font-bold text-foreground">
-                            {event.registeredCount} / {event.capacity} seats filled
-                          </p>
+                <Card3D depth={10}>
+                  <Card className="rounded-3xl shadow-2xl overflow-hidden">
+                    <div className="h-2 w-full bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500" />
+                    <CardContent className="p-7">
+                      <div className="flex justify-between items-center mb-6">
+                        <h3 className="text-xl font-bold text-foreground">Registration</h3>
+                        <div className="flex items-center gap-2">
+                          <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full hover:bg-amber-500/10 text-amber-500">
+                            <Share2 className="w-4 h-4" />
+                          </Button>
+                          <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full hover:bg-amber-500/10">
+                            <Bookmark className="w-4 h-4" />
+                          </Button>
                         </div>
                       </div>
-                      
-                      {event.isOnline && event.meetingUrl && userRegistration && (
+
+                      <div className="flex justify-between items-center py-2 border-b border-white/15 dark:border-amber-500/15 mb-4">
+                        <span className="text-muted-foreground font-medium">Price</span>
+                        <Card3DItem translateZ={20}>
+                          <span className="font-extrabold text-2xl text-amber-500">{event.isFree ? 'Free' : `${event.price} ETB`}</span>
+                        </Card3DItem>
+                      </div>
+
+                      <div className="space-y-4 mb-8">
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 rounded-full bg-amber-500/15 border border-amber-500/25 flex items-center justify-center shrink-0">
-                            <LinkIcon className="w-5 h-5 text-amber-500" />
+                            <Users className="w-5 h-5 text-amber-500" />
                           </div>
-                          <div className="overflow-hidden">
-                            <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">Meeting Link</p>
-                            <a href={event.meetingUrl} target="_blank" rel="noreferrer" className="font-bold text-amber-500 hover:underline truncate block">
-                              Join Event Online
-                            </a>
+                          <div>
+                            <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">Capacity</p>
+                            <p className="font-bold text-foreground">
+                              {event.registeredCount} / {event.capacity} seats filled
+                            </p>
                           </div>
                         </div>
-                      )}
-                    </div>
-
-                    {/* Call to Action Button */}
-                    {isOrganizer ? (
-                      <Button className="w-full h-14 text-lg font-bold rounded-2xl" variant="outline" onClick={() => router.push(`/dashboard/organizer/events/${event.id}`)}>
-                        Manage Event
-                      </Button>
-                    ) : isPast ? (
-                      <Button className="w-full h-14 text-lg font-bold rounded-2xl" variant="secondary" disabled>
-                        Event has ended
-                      </Button>
-                    ) : userRegistration ? (
-                      <div className="space-y-3">
-                        <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 flex items-center justify-center gap-2 font-bold text-base">
-                          <Ticket className="w-5 h-5" /> You are registered!
-                        </div>
-                        <Button 
-                          className="w-full h-12 rounded-2xl" 
-                          variant="destructive" 
-                          onClick={handleCancel}
-                          disabled={cancelMutation.isPending}
-                        >
-                          Cancel Registration
-                        </Button>
+                        
+                        {event.isOnline && event.meetingUrl && userRegistration && (
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-amber-500/15 border border-amber-500/25 flex items-center justify-center shrink-0">
+                              <LinkIcon className="w-5 h-5 text-amber-500" />
+                            </div>
+                            <div className="overflow-hidden">
+                              <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">Meeting Link</p>
+                              <a href={event.meetingUrl} target="_blank" rel="noreferrer" className="font-bold text-amber-500 hover:underline truncate block">
+                                Join Event Online
+                              </a>
+                            </div>
+                          </div>
+                        )}
                       </div>
-                    ) : (
-                      <Button 
-                        className={`w-full h-14 text-lg font-bold rounded-2xl ${isFull ? 'bg-orange-500 hover:bg-orange-600' : 'bg-primary hover:bg-primary/90 text-primary-foreground'} shadow-xl shadow-amber-500/25 transition-all hover:scale-105`}
-                        onClick={handleRegisterClick}
-                      >
-                        {isFull ? 'Join Waitlist' : 'Get Tickets'}
-                      </Button>
-                    )}
-                    
-                    {event.registrationDeadline && !isPast && !userRegistration && (
-                      <p className="text-xs text-center text-muted-foreground mt-4 font-medium">
-                        Sales end: {format(new Date(event.registrationDeadline), 'MMM d, yyyy')}
-                      </p>
-                    )}
-                  </CardContent>
-                </Card>
+
+                      {/* Call to Action Button */}
+                      {isOrganizer ? (
+                        <Button className="w-full h-14 text-lg font-bold rounded-2xl" variant="outline" onClick={() => router.push(`/dashboard/organizer/events/${event.id}`)}>
+                          Manage Event
+                        </Button>
+                      ) : isPast ? (
+                        <Button className="w-full h-14 text-lg font-bold rounded-2xl" variant="secondary" disabled>
+                          Event has ended
+                        </Button>
+                      ) : userRegistration ? (
+                        <div className="space-y-3">
+                          <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 flex items-center justify-center gap-2 font-bold text-base">
+                            <Ticket className="w-5 h-5" /> You are registered!
+                          </div>
+                          <Button 
+                            className="w-full h-12 rounded-2xl" 
+                            variant="destructive" 
+                            onClick={handleCancel}
+                            disabled={cancelMutation.isPending}
+                          >
+                            Cancel Registration
+                          </Button>
+                        </div>
+                      ) : (
+                        <Card3DItem translateZ={30}>
+                          <Button 
+                            className={`w-full h-14 text-lg font-bold rounded-2xl ${isFull ? 'bg-orange-500 hover:bg-orange-600' : 'bg-primary hover:bg-primary/90 text-primary-foreground'} btn-3d-golden`}
+                            onClick={handleRegisterClick}
+                          >
+                            {isFull ? 'Join Waitlist' : 'Get Tickets'}
+                          </Button>
+                        </Card3DItem>
+                      )}
+                      
+                      {event.registrationDeadline && !isPast && !userRegistration && (
+                        <p className="text-xs text-center text-muted-foreground mt-4 font-medium">
+                          Sales end: {format(new Date(event.registrationDeadline), 'MMM d, yyyy')}
+                        </p>
+                      )}
+                    </CardContent>
+                  </Card>
+                </Card3D>
               </div>
             </div>
             

@@ -25,6 +25,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from 'recharts';
+import { Card3D, Card3DItem } from '@/components/ui/card-3d';
 
 type Registration = {
   id: string;
@@ -145,20 +146,22 @@ export default function StudentDashboard() {
         <p className="text-muted-foreground mt-1">Your personal AI-driven event hub — discover, connect, and grow.</p>
       </div>
 
-      {/* Stats */}
+      {/* Stats (3D Tilt Cards) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((s, i) => (
-          <Card key={i} className="hover:border-amber-400/50 hover:shadow-xl hover:shadow-amber-500/10 transition-all">
-            <CardContent className="p-5 flex items-center gap-4">
-              <div className={`p-3 rounded-2xl bg-amber-500/15 border border-amber-500/25 ${s.color}`}>
-                <s.icon className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">{s.title}</p>
-                <h3 className="text-2xl font-extrabold text-foreground">{s.value}</h3>
-              </div>
-            </CardContent>
-          </Card>
+          <Card3D key={i} depth={10} className="h-full">
+            <Card className="hover:border-amber-400/50 hover:shadow-xl hover:shadow-amber-500/10 transition-all h-full">
+              <CardContent className="p-5 flex items-center gap-4">
+                <Card3DItem translateZ={25} className={`p-3 rounded-2xl bg-amber-500/15 border border-amber-500/25 ${s.color}`}>
+                  <s.icon className="w-5 h-5" />
+                </Card3DItem>
+                <Card3DItem translateZ={15}>
+                  <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">{s.title}</p>
+                  <h3 className="text-2xl font-extrabold text-foreground">{s.value}</h3>
+                </Card3DItem>
+              </CardContent>
+            </Card>
+          </Card3D>
         ))}
       </div>
 
@@ -192,33 +195,34 @@ export default function StudentDashboard() {
                   const next = upcoming[0];
                   const timeLeft = formatDistanceToNow(new Date(next.event.date), { addSuffix: true });
                   return (
-                    <Card className="rounded-3xl overflow-hidden group hover:border-amber-400/50 transition-all shadow-xl shadow-amber-500/5">
-                      <div className="flex flex-col md:flex-row">
-                        <div className="w-full md:w-44 bg-gradient-to-br from-amber-500/20 via-amber-500/10 to-transparent flex flex-col items-center justify-center p-6 gap-3 border-r border-white/20 dark:border-amber-500/20">
-                          <div className="w-20 h-20 bg-white rounded-xl p-2 shadow-lg group-hover:scale-105 transition-transform overflow-hidden">
-                            {next.qrCode ? (
-                              <img src={next.qrCode} alt="Ticket QR Code" className="w-full h-full object-contain mix-blend-multiply" />
-                            ) : (
-                              <QrCode className="w-full h-full text-black" />
-                            )}
+                    <Card3D depth={8}>
+                      <Card className="rounded-3xl overflow-hidden group hover:border-amber-400/50 transition-all shadow-xl shadow-amber-500/5">
+                        <div className="flex flex-col md:flex-row">
+                          <div className="w-full md:w-44 bg-gradient-to-br from-amber-500/20 via-amber-500/10 to-transparent flex flex-col items-center justify-center p-6 gap-3 border-r border-white/20 dark:border-amber-500/20">
+                            <Card3DItem translateZ={30} className="w-20 h-20 bg-white rounded-xl p-2 shadow-lg group-hover:scale-105 transition-transform overflow-hidden">
+                              {next.qrCode ? (
+                                <img src={next.qrCode} alt="Ticket QR Code" className="w-full h-full object-contain mix-blend-multiply" />
+                              ) : (
+                                <QrCode className="w-full h-full text-black" />
+                              )}
+                            </Card3DItem>
+                            <p className="text-xs font-bold text-amber-500 bg-amber-500/10 px-2 py-1 rounded-full">Show at Door</p>
                           </div>
-                          <p className="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-full">Show at Door</p>
-                        </div>
-                        <div className="p-6 flex-1 flex flex-col">
-                          <div className="flex justify-between items-start mb-3">
-                            <div>
-                              <Badge variant="outline" className="border-primary/40 text-primary text-xs mb-2">{next.event.category?.name || 'Event'}</Badge>
-                              <h3 className="text-lg font-bold text-foreground">{next.event.title}</h3>
+                          <div className="p-6 flex-1 flex flex-col">
+                            <div className="flex justify-between items-start mb-3">
+                              <Card3DItem translateZ={15}>
+                                <Badge variant="outline" className="border-amber-500/40 text-amber-500 text-xs mb-2 rounded-full">{next.event.category?.name || 'Event'}</Badge>
+                                <h3 className="text-lg font-bold text-foreground">{next.event.title}</h3>
+                              </Card3DItem>
+                              <Badge className="bg-amber-500/15 text-amber-500 border border-amber-500/30 text-xs rounded-full shadow-sm">
+                                <Clock className="w-3 h-3 mr-1" />{timeLeft}
+                              </Badge>
                             </div>
-                            <Badge className="bg-orange-500/10 text-orange-500 border-orange-500/30 text-xs shadow-[0_0_10px_rgba(249,115,22,0.2)]">
-                              <Clock className="w-3 h-3 mr-1" />{timeLeft}
-                            </Badge>
-                          </div>
-                          <div className="grid grid-cols-2 gap-2 text-sm text-muted-foreground mb-4">
-                            <span className="flex items-center gap-1.5"><CalendarDays className="w-3.5 h-3.5 text-foreground/70" /> {format(new Date(next.event.date), 'MMM d, yyyy')}</span>
-                            <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-foreground/70" /> {next.event.startTime}</span>
-                            <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-foreground/70" /> {next.event.location}</span>
-                          </div>
+                            <div className="grid grid-cols-2 gap-2 text-sm text-muted-foreground mb-4">
+                              <span className="flex items-center gap-1.5"><CalendarDays className="w-3.5 h-3.5 text-amber-500" /> {format(new Date(next.event.date), 'MMM d, yyyy')}</span>
+                              <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-amber-500" /> {next.event.startTime}</span>
+                              <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-amber-500" /> {next.event.location}</span>
+                            </div>
 
                           {/* AI Networking Matchmaker */}
                           <div className="mt-auto pt-4 border-t border-border">
@@ -252,7 +256,8 @@ export default function StudentDashboard() {
                         </div>
                       </div>
                     </Card>
-                  );
+                  </Card3D>
+                );
                 })()}
               </section>
             )}

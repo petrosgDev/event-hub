@@ -246,3 +246,132 @@
 .animate-float-delayed {
   animation: float-slow 10s ease-in-out 3s infinite;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   3D SPATIAL DEPTH & PERSPECTIVE SYSTEM
+   ══════════════════════════════════════════════════════════════ */
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.perspective-1200 {
+  perspective: 1200px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.translate-z-10 {
+  transform: translateZ(10px);
+}
+
+.translate-z-20 {
+  transform: translateZ(20px);
+}
+
+.translate-z-30 {
+  transform: translateZ(30px);
+}
+
+.translate-z-40 {
+  transform: translateZ(40px);
+}
+
+/* 3D Beveled Glass Slab with Real Thickness */
+.glass-3d-card {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border-top: 1px solid rgba(255, 255, 255, 0.7);
+  border-left: 1px solid rgba(255, 255, 255, 0.4);
+  border-right: 1px solid rgba(245, 158, 11, 0.2);
+  border-bottom: 3px solid rgba(245, 158, 11, 0.35);
+  box-shadow: 
+    0 24px 50px -10px rgba(0, 0, 0, 0.12),
+    0 12px 24px -5px rgba(245, 158, 11, 0.1),
+    inset 0 1px 2px rgba(255, 255, 255, 0.8),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.05);
+  transform-style: preserve-3d;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+}
+
+.dark .glass-3d-card {
+  background: rgba(14, 12, 9, 0.35);
+  backdrop-filter: blur(32px) saturate(200%);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  border-top: 1px solid rgba(251, 191, 36, 0.45);
+  border-left: 1px solid rgba(245, 158, 11, 0.25);
+  border-right: 1px solid rgba(245, 158, 11, 0.15);
+  border-bottom: 3px solid rgba(180, 83, 9, 0.65);
+  box-shadow: 
+    0 32px 65px -12px rgba(0, 0, 0, 0.7),
+    0 18px 36px -18px rgba(245, 158, 11, 0.3),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.5);
+  transform-style: preserve-3d;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+}
+
+.glass-3d-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 40px 80px -15px rgba(0, 0, 0, 0.8),
+    0 25px 45px -10px rgba(245, 158, 11, 0.4),
+    0 0 35px rgba(245, 158, 11, 0.22),
+    inset 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+/* 3D Perspective Ground Grid (Infinite Cyber Campus Plane) */
+.perspective-grid {
+  position: absolute;
+  inset: -50% -50% 0 -50%;
+  background-image: 
+    linear-gradient(to right, rgba(245, 158, 11, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(245, 158, 11, 0.12) 1px, transparent 1px);
+  background-size: 60px 60px;
+  transform: perspective(600px) rotateX(68deg) translateY(-80px);
+  transform-origin: top center;
+  mask-image: radial-gradient(ellipse 70% 50% at 50% 25%, black 20%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 25%, black 20%, transparent 80%);
+  pointer-events: none;
+}
+
+/* 3D Tactile Action Buttons */
+.btn-3d-golden {
+  position: relative;
+  transition: all 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+  box-shadow: 0 5px 0 #b45309, 0 14px 28px rgba(245, 158, 11, 0.35);
+}
+
+.btn-3d-golden:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 #b45309, 0 20px 35px rgba(245, 158, 11, 0.45);
+}
+
+.btn-3d-golden:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #b45309, 0 8px 16px rgba(245, 158, 11, 0.25);
+}
+
+/* 3D Kinetic Ring Animations */
+@keyframes spin-3d-slow {
+  0% { transform: rotateX(65deg) rotateY(15deg) rotateZ(0deg); }
+  100% { transform: rotateX(65deg) rotateY(15deg) rotateZ(360deg); }
+}
+
+@keyframes spin-3d-reverse {
+  0% { transform: rotateY(55deg) rotateX(25deg) rotateZ(360deg); }
+  100% { transform: rotateY(55deg) rotateX(25deg) rotateZ(0deg); }
+}
+
+.animate-spin-3d {
+  animation: spin-3d-slow 22s linear infinite;
+}
+
+.animate-spin-3d-reverse {
+  animation: spin-3d-reverse 17s linear infinite;
+}
+
