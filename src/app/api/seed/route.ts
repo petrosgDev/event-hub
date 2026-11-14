@@ -52,3 +52,4 @@ async function handleSeed(req: NextRequest) {
     );
   }
 }
+

@@ -53,10 +53,14 @@ export default function LoginPage() {
           router.push('/dashboard/student');
       }
     } catch (error: any) {
-      toast.error('Login failed. Please check your email and password.');
+      toast.error(error.response?.data?.message || 'Login failed. Please check your email and password.');
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const fillDemo = (email: string, pass: string) => {
+    setFormData({ email, password: pass });
   };
 
   return (
@@ -124,6 +128,36 @@ export default function LoginPage() {
           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           {isLoading ? 'Signing in...' : 'Sign In'}
         </Button>
+
+        {/* Quick Demo Accounts */}
+        <div className="pt-3 pb-1 border-0">
+          <p className="text-[11px] text-muted-foreground uppercase tracking-wider font-bold text-center mb-2.5 opacity-80">
+            One-Click Demo Fill
+          </p>
+          <div className="grid grid-cols-3 gap-2">
+            <button
+              type="button"
+              onClick={() => fillDemo('student@dbu.edu.et', 'student')}
+              className="text-xs font-semibold py-2 px-2 rounded-xl bg-white/20 dark:bg-white/5 hover:bg-amber-500/20 text-foreground/80 hover:text-amber-500 border-0 transition-all text-center"
+            >
+              🎓 Student
+            </button>
+            <button
+              type="button"
+              onClick={() => fillDemo('vendor@dbu.edu.et', 'vendor')}
+              className="text-xs font-semibold py-2 px-2 rounded-xl bg-white/20 dark:bg-white/5 hover:bg-amber-500/20 text-foreground/80 hover:text-amber-500 border-0 transition-all text-center"
+            >
+              🏢 Organizer
+            </button>
+            <button
+              type="button"
+              onClick={() => fillDemo('admin@dbu.edu.et', 'admin')}
+              className="text-xs font-semibold py-2 px-2 rounded-xl bg-white/20 dark:bg-white/5 hover:bg-amber-500/20 text-foreground/80 hover:text-amber-500 border-0 transition-all text-center"
+            >
+              🛡️ Admin
+            </button>
+          </div>
+        </div>
 
         <div className="text-center pt-2">
           <p className="text-xs text-muted-foreground font-medium">

@@ -309,3 +309,4 @@ export async function seedDatabase(prisma: PrismaClient) {
     newEventsCreated: createdEventsCount,
   };
 }
+
