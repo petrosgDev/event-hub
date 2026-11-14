@@ -12,7 +12,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Navbar } from '@/components/layout/navbar';
 import { Card3D, Card3DItem } from '@/components/ui/card-3d';
-import { Hero3DScene } from '@/components/ui/hero-3d-scene';
 import { 
   ArrowRight, Sparkles, QrCode, BrainCircuit, BarChart3, 
   Award, ShieldCheck, CalendarDays, MapPin, Clock, Users,
@@ -74,53 +73,43 @@ export default function LandingPage() {
           <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-amber-500/15 rounded-full blur-[140px] pointer-events-none" />
           <div className="absolute bottom-0 left-1/4 w-[450px] h-[450px] bg-yellow-500/10 rounded-full blur-[130px] pointer-events-none" />
 
-          <div className="container mx-auto px-4 relative z-10 max-w-7xl">
+          <div className="container mx-auto px-4 relative z-10 text-center max-w-5xl">
             <motion.div initial="hidden" animate="visible" variants={fadeIn}>
-              {/* 3D Hero Grid: Headline on left, Interactive 3D Hologram on right */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-12 text-center lg:text-left">
-                <div className="lg:col-span-7">
-                  <div className="inline-flex items-center rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 text-sm text-amber-500 mb-8 backdrop-blur-md gap-2 shadow-sm">
-                    <GraduationCap className="w-4 h-4 text-amber-500" />
-                    <span className="font-semibold">{t('heroBadge')}</span>
-                  </div>
-                  
-                  <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-6 text-foreground leading-[1.1]">
-                    {t('heroTitle1')}<br/>
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 drop-shadow-[0_4px_16px_rgba(245,158,11,0.35)]">
-                      {t('heroTitle2')}
-                    </span>
-                  </h1>
-                  
-                  <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed">
-                    {t('heroDescription')}
-                  </p>
-                  
-                  <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                    <Link href="/events/discover">
-                      <Button size="lg" className="h-14 px-8 text-lg bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full btn-3d-golden transition-all">
-                        {t('exploreEvents')} <ArrowRight className="ml-2 w-5 h-5" />
-                      </Button>
-                    </Link>
-                    <Button 
-                      size="lg" 
-                      variant="outline" 
-                      onClick={() => setShowDemo(true)} 
-                      className="h-14 px-8 text-lg rounded-full border border-amber-500/30 hover:bg-amber-500/10 bg-white/40 dark:bg-black/35 backdrop-blur-xl font-semibold text-foreground shadow-md hover:scale-105 transition-all"
-                    >
-                      <Play className="mr-2 w-5 h-5 fill-amber-500 text-amber-500" /> Watch Demo
-                    </Button>
-                    <Link href="/register">
-                      <Button size="lg" variant="ghost" className="h-14 px-8 text-lg rounded-full hover:bg-white/10 dark:hover:bg-amber-500/10 backdrop-blur-md text-foreground/80 font-medium">
-                        {t('joinAsOrganizer')}
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-
-                {/* 3D Holographic Constellation Centerpiece */}
-                <div className="lg:col-span-5 flex items-center justify-center">
-                  <Hero3DScene />
-                </div>
+              <div className="inline-flex items-center rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 text-sm text-amber-500 mb-8 backdrop-blur-md gap-2 shadow-sm">
+                <GraduationCap className="w-4 h-4 text-amber-500" />
+                <span className="font-semibold">{t('heroBadge')}</span>
+              </div>
+              
+              <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight mb-6 text-foreground leading-[1.1]">
+                {t('heroTitle1')}<br/>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-500 drop-shadow-[0_4px_16px_rgba(245,158,11,0.35)]">
+                  {t('heroTitle2')}
+                </span>
+              </h1>
+              
+              <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
+                {t('heroDescription')}
+              </p>
+              
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+                <Link href="/events/discover">
+                  <Button size="lg" className="h-14 px-8 text-lg bg-primary hover:bg-primary/90 text-primary-foreground font-bold rounded-full btn-3d-golden transition-all">
+                    {t('exploreEvents')} <ArrowRight className="ml-2 w-5 h-5" />
+                  </Button>
+                </Link>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  onClick={() => setShowDemo(true)} 
+                  className="h-14 px-8 text-lg rounded-full border border-amber-500/30 hover:bg-amber-500/10 bg-white/40 dark:bg-black/35 backdrop-blur-xl font-semibold text-foreground shadow-md hover:scale-105 transition-all"
+                >
+                  <Play className="mr-2 w-5 h-5 fill-amber-500 text-amber-500" /> Watch Demo
+                </Button>
+                <Link href="/register">
+                  <Button size="lg" variant="ghost" className="h-14 px-8 text-lg rounded-full hover:bg-white/10 dark:hover:bg-amber-500/10 backdrop-blur-md text-foreground/80 font-medium">
+                    {t('joinAsOrganizer')}
+                  </Button>
+                </Link>
               </div>
 
               {/* 🏆 Interactive 3D Tilt Hero Stats Box */}
